@@ -6,6 +6,7 @@ const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
 const app = express();
 
+
 mongoose.connect('mongodb+srv://NewUser:mdpUser@cluster0.r91aduk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
