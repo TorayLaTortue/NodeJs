@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/User";
 import jwt from "jsonwebtoken";
@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 export const signup = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): Promise<void> => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -24,7 +23,6 @@ export const signup = async (
 export const login = (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): void => {
   User.findOne({ email: req.body.email })
     .then((user) => {

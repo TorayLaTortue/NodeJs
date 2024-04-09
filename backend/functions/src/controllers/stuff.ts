@@ -1,10 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import Thing, { ThingInterface } from "../models/Thing";
 
 export const createThing = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): Promise<void> => {
   try {
     const thing: ThingInterface = new Thing({
@@ -28,7 +27,6 @@ export const createThing = async (
 export const getOneThing = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): Promise<void> => {
   try {
     const thing: ThingInterface | null = await Thing.findOne({
@@ -51,7 +49,6 @@ export const getOneThing = async (
 export const modifyThing = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): Promise<void> => {
   try {
     const thingToUpdate: Partial<ThingInterface> = {
@@ -75,7 +72,6 @@ export const modifyThing = async (
 export const deleteThing = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): Promise<void> => {
   try {
     await Thing.deleteOne({ _id: req.params.id });
@@ -92,7 +88,6 @@ export const deleteThing = async (
 export const getAllStuff = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ): Promise<void> => {
   try {
     const things: ThingInterface[] = await Thing.find();

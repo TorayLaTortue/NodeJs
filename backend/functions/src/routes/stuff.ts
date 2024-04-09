@@ -1,4 +1,4 @@
-import * as express from "express"; // Warn
+import * as express from "express";
 import { Router } from "express";
 import auth from "../middleware/auth";
 import * as stuffCtrl from "../controllers/stuff";

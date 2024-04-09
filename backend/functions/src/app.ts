@@ -1,10 +1,9 @@
 import { onRequest, HttpsFunction } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import * as admin from "firebase-admin";
-import express from "express";
 import * as mongoose from "mongoose";
 import * as bodyParser from "body-parser";
-import { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import stuffRoutes from "./routes/stuff";
 import userRoutes from "./routes/user";
 import * as dotenv from "dotenv";
