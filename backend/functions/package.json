@@ -1,7 +1,8 @@
 {
   "name": "functions",
   "description": "",
-  "main": "src/app.ts",
+  "main": "lib/app.js",
+  "type": "module",
   "scripts": {
     "lint": "tsc --noEmit && eslint --ext .js,.ts .",
     "build": "tsc",
