@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Thing, { ThingInterface } from "../models/Thing";
+import Thing, { ThingInterface } from "../models/Thing.js";
 
 export const createThing = async (
   req: Request,

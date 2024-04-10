@@ -1,9 +1,10 @@
 import * as express from "express";
 import { Router } from "express";
-import auth from "../middleware/auth";
-import * as stuffCtrl from "../controllers/stuff";
+import auth from "../middleware/auth.js";
+import * as stuffCtrl from "../controllers/stuff.js";
 
-const router: Router = express.router();
+// eslint-disable-next-line new-cap
+const router: Router = express.Router();
 
 router.get("/", auth, stuffCtrl.getAllStuff);
 router.post("/", auth, stuffCtrl.createThing);

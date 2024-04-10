@@ -1,16 +1,15 @@
 import { onRequest, HttpsFunction } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import * as admin from "firebase-admin";
+import { initializeApp } from "firebase-admin/app";
 import * as mongoose from "mongoose";
-import * as bodyParser from "body-parser";
 import express, { Request, Response, NextFunction } from "express";
-import stuffRoutes from "./routes/stuff";
-import userRoutes from "./routes/user";
+import stuffRoutes from "./routes/stuff.js";
+import userRoutes from "./routes/user.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
 
-admin.initializeApp();
+initializeApp();
 
 const app: express.Application = express();
 
@@ -28,7 +27,7 @@ mongoose
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 app.use(express.json());
-
+ 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -42,10 +41,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.use("/api/stuff", stuffRoutes);
-app.use("/api/auth", userRoutes);
+app.use("/api/stuff.js", stuffRoutes);
+app.use("/api/auth.js", userRoutes);
 
 const api: HttpsFunction = onRequest((request: Request, response: Response) => {
   logger.info("Hello logs!", { structuredData: true });
