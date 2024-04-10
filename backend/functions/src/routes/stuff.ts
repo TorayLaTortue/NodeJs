@@ -1,15 +1,20 @@
-import * as express from "express";
-import { Router } from "express";
-import auth from "../middleware/auth.js";
+import { Application } from "express";
+// import auth from "../middleware/auth.js";
 import * as stuffCtrl from "../controllers/stuff.js";
 
 // eslint-disable-next-line new-cap
-const router: Router = express.Router();
+// const router: Router = express.Router();
 
-router.get("/", auth, stuffCtrl.getAllStuff);
-router.post("/", auth, stuffCtrl.createThing);
-router.get("/:id", auth, stuffCtrl.getOneThing);
-router.put("/:id", auth, stuffCtrl.modifyThing);
-router.delete("/:id", auth, stuffCtrl.deleteThing);
+/**
+ * ## Stuff Routes
+ * @param {Application} app: Main expresse app process
+ */
+export const stuffRoutes = (app: Application) => {
+  app.get("/stuff"/* , auth */, stuffCtrl.getAllStuff);
+  app.post("/stuff"/* , auth */, stuffCtrl.createThing);
+  app.get("/stuff/:id"/* , auth */, stuffCtrl.getOneThing);
+  app.put("/stuff/:id"/* , auth */, stuffCtrl.modifyThing);
+  app.delete("/stuff/:id"/* , auth */, stuffCtrl.deleteThing);
+}
 
-export default router;
+export default stuffRoutes;
