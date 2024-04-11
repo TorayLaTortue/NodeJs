@@ -994,3 +994,104 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2024-04-10T15:47:44.868Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
 [debug] [2024-04-10T15:47:44.868Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
 [debug] [2024-04-10T15:47:44.868Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:17:04.199Z] [work-queue] {"queuedWork":["/serveurnodejs/us-central1/api/stuff-2024-04-11T07:17:04.199Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:17:04.200Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/serveurnodejs/us-central1/api/stuff-2024-04-11T07:17:04.199Z"],"workRunningCount":1}
+[debug] [2024-04-11T07:17:04.201Z] Accepted request POST /serveurnodejs/us-central1/api/stuff --> us-central1-api
+[debug] [2024-04-11T07:17:04.207Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2024-04-11T07:17:04.207Z] [functions] Got req.url=/serveurnodejs/us-central1/api/stuff, mapping to path=/stuff {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/serveurnodejs/us-central1/api/stuff, mapping to path=/stuff"}}
+[debug] [2024-04-11T07:17:04.207Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2024-04-11T07:17:04.208Z] [worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: BUSY"}}
+[debug] [2024-04-11T07:17:04.240Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-api" in 32.1859ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"us-central1-api\" in 32.1859ms"}}
+[debug] [2024-04-11T07:17:04.241Z] [worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: IDLE"}}
+[debug] [2024-04-11T07:17:04.241Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2024-04-11T07:17:04.241Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2024-04-11T07:17:04.241Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:39:42.911Z] [work-queue] {"queuedWork":["/serveurnodejs/us-central1/api/stuff-2024-04-11T07:39:42.911Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:39:42.912Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/serveurnodejs/us-central1/api/stuff-2024-04-11T07:39:42.911Z"],"workRunningCount":1}
+[debug] [2024-04-11T07:39:42.912Z] Accepted request POST /serveurnodejs/us-central1/api/stuff?1=1 --> us-central1-api
+[debug] [2024-04-11T07:39:42.917Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2024-04-11T07:39:42.917Z] [functions] Got req.url=/serveurnodejs/us-central1/api/stuff?1=1, mapping to path=/stuff?1=1 {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/serveurnodejs/us-central1/api/stuff?1=1, mapping to path=/stuff?1=1"}}
+[debug] [2024-04-11T07:39:42.918Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2024-04-11T07:39:42.919Z] [worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: BUSY"}}
+[debug] [2024-04-11T07:39:42.933Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-api" in 14.4103ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"us-central1-api\" in 14.4103ms"}}
+[debug] [2024-04-11T07:39:42.934Z] [worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: IDLE"}}
+[debug] [2024-04-11T07:39:42.935Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2024-04-11T07:39:42.935Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2024-04-11T07:39:42.936Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:44:27.826Z] [work-queue] {"queuedWork":["/serveurnodejs/us-central1/api/stuff-2024-04-11T07:44:27.826Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:44:27.826Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/serveurnodejs/us-central1/api/stuff-2024-04-11T07:44:27.826Z"],"workRunningCount":1}
+[debug] [2024-04-11T07:44:27.827Z] Accepted request POST /serveurnodejs/us-central1/api/stuff --> us-central1-api
+[debug] [2024-04-11T07:44:27.831Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2024-04-11T07:44:27.831Z] [functions] Got req.url=/serveurnodejs/us-central1/api/stuff, mapping to path=/stuff {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/serveurnodejs/us-central1/api/stuff, mapping to path=/stuff"}}
+[debug] [2024-04-11T07:44:27.831Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2024-04-11T07:44:27.832Z] [worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: BUSY"}}
+[debug] [2024-04-11T07:44:27.839Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-api" in 7.2041ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"us-central1-api\" in 7.2041ms"}}
+[debug] [2024-04-11T07:44:27.840Z] [worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-1b132f70-889d-4937-8bc7-d53b9094fe4d]: IDLE"}}
+[debug] [2024-04-11T07:44:27.840Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2024-04-11T07:44:27.840Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2024-04-11T07:44:27.841Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2024-04-11T07:45:37.761Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\src\models\Thing.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\src\\models\\Thing.ts changed, reloading triggers"}}
+[debug] [2024-04-11T07:45:38.770Z] Validating nodejs source
+[debug] [2024-04-11T07:45:41.434Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "",
+  "main": "lib/app.js",
+  "type": "module",
+  "scripts": {
+    "lint": "tsc --noEmit && eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "concurrently \"npm run build:watch\" \"firebase emulators:start --only functions\"",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "format": "prettier --write ."
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^4.9.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.1",
+    "mongoose-unique-validator": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/mongoose": "^5.11.97",
+    "@types/mongoose-unique-validator": "^1.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2024-04-11T07:45:41.434Z] Building nodejs source
+[debug] [2024-04-11T07:45:41.435Z] Failed to find version of module node: reached end of search path C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\node_modules
+[info] +  functions: Using node@20 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2024-04-11T07:45:41.438Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-04-11T07:45:41.465Z] Found firebase-functions binary at 'C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\node_modules\.bin\firebase-functions'
+[debug] [2024-04-11T07:45:41.508Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\lib\models\Thing.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\lib\\models\\Thing.js.map changed, reloading triggers"}}
+[debug] [2024-04-11T07:45:41.508Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\lib\controllers\stuff.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\lib\\controllers\\stuff.js.map changed, reloading triggers"}}
+[debug] [2024-04-11T07:45:41.509Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\lib\routes\stuff.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\lib\\routes\\stuff.js.map changed, reloading triggers"}}
+[debug] [2024-04-11T07:45:41.542Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\lib\models\Thing.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\lib\\models\\Thing.js changed, reloading triggers"}}
+[debug] [2024-04-11T07:45:41.542Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\lib\controllers\stuff.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\lib\\controllers\\stuff.js changed, reloading triggers"}}
+[debug] [2024-04-11T07:45:41.543Z] File C:\Users\damie\Documents\Dev\js\NodeJs\backend\functions\lib\routes\stuff.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\damie\\Documents\\Dev\\js\\NodeJs\\backend\\functions\\lib\\routes\\stuff.js changed, reloading triggers"}}
