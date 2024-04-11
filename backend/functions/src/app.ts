@@ -2,10 +2,11 @@ import { onRequest } from "firebase-functions/v2/https";
 // import * as logger from "firebase-functions/logger";
 import { initializeApp } from "firebase-admin/app";
 import * as mongoose from "mongoose";
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import stuffRoutes from "./routes/stuff.js";
 // import userRoutes from "./routes/user.js";
 import * as dotenv from "dotenv";
+import { userRoutes } from "./routes/user.js";
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.use(express.json());
 
 // app.use(express.json());
 stuffRoutes(app);
+userRoutes(app);
 // app.use("/api/auth", userRoutes);
 
 export const api = onRequest(app/* (request: Request, response: Response) => {

@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import User from "../models/User.js";
+import User,{UserInterface} from "../models/User.js";
 import jwt from "jsonwebtoken";
+import * as admin from "firebase-admin";
 
 export const signup = async (
   req: Request,
@@ -53,3 +54,61 @@ export const login = (
       res.status(500).json({ error });
     });
 };
+
+
+// { displayName: string, password: string, email: string, role: string }
+export const create = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { displayName, password, email, role } = req.body;
+
+    // Check if any required field is missing
+    if (!displayName || !password || !email || !role) {
+    res.status(400).send({ message: 'Missing fields' });
+    }
+
+    // Create a new user with the provided data
+    const userRole: UserInterface = new User({
+      displayName,
+      email,
+      password,
+      role,
+    });
+
+    // Save the user to the database
+    await userRole.save();
+
+    // Create Firebase user
+    const { uid } = await admin.auth().createUser({
+      displayName,
+      password,
+      email,
+    });
+
+    // Set custom user claims
+    await admin.auth().setCustomUserClaims(uid, { role });
+
+    // Send success response
+    res.status(201).json({
+      message: "Post saved successfully!",
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error,
+    });
+  }
+};
+
+
+
+  export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const users: UserInterface[] = await User.find();
+
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error"});
+    }
+  };
