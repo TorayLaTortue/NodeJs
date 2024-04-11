@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "",
   "main": "lib/app.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "lint": "tsc --noEmit && eslint --ext .js,.ts .",
     "build": "tsc",
