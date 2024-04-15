@@ -12,40 +12,45 @@ import { isAuthorized } from "../middleware/authorized.js";
  * @param {Application} app: Main expresse app process
  */
 export const userRoutes = (app: Application) => {
-    app.post("/signup", userCtrl.signup);
-    app.post("/login", userCtrl.login);
-    app.post("/create",userCtrl.create, isAuthenticated,isAuthorized({ hasRole: ['admin', 'manager'] }),);
-    app.get("/allUser", userCtrl.getAllUsers);
+  app.post("/signup", userCtrl.signup);
+  app.post("/login", userCtrl.login);
+  
+  app.get("/allUser", userCtrl.getAllUsers);
 
-    app.get('/users', [
-       isAuthenticated,
-       isAuthorized({ hasRole: ['admin', 'manager'] }),
-       userCtrl.all]);
+  app.post("/create",
+    userCtrl.create,
+    isAuthenticated,
+    isAuthorized({ hasRole: ["admin", "manager"] }),);
 
-   // get :id user
-   app.get('/users/:id', [
-       isAuthenticated,
-       isAuthorized({ hasRole: ['admin', 'manager'], allowSameUser: true }),
-       userCtrl.get]);
+  app.get("/users", [
+    isAuthenticated,
+    isAuthorized({ hasRole: ["admin", "manager"] }),
+    userCtrl.all]);
 
-   // updates :id user
-   app.patch('/users/:id', [
-       isAuthenticated,
-       isAuthorized({ hasRole: ['admin', 'manager'], allowSameUser: true }),
-       userCtrl.patch]);
+  // get :id user
+  app.get("/users/:id", [
+    isAuthenticated,
+    isAuthorized({ hasRole: ["admin", "manager"], allowSameUser: true }),
+    userCtrl.get]);
 
-   // deletes :id user
-   app.delete('/users/:id', [
-       isAuthenticated,
-       isAuthorized({ hasRole: ['admin', 'manager'] }),
-       userCtrl.remove]);
-  }
+  // updates :id user
+  app.patch("/users/:id", [
+    isAuthenticated,
+    isAuthorized({ hasRole: ["admin", "manager"], allowSameUser: true }),
+    userCtrl.patch]);
 
-  /**
+  // deletes :id user
+  app.delete("/users/:id", [
+    isAuthenticated,
+    isAuthorized({ hasRole: ["admin", "manager"] }),
+    userCtrl.remove]);
+}
+
+/**
  * ## routes Config
  * @param {Application} app: Main expresse app process
  */
-/*export function routesConfig(app: Application) {
+/* export function routesConfig(app: Application) {
 }
 
 export default routesConfig;*/

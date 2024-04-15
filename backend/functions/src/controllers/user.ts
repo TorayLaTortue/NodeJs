@@ -66,7 +66,7 @@ export const create = async (
 
     // Check if any required field is missing
     if (!displayName || !password || !email || !role) {
-    res.status(400).send({ message: "Missing fields" });
+      res.status(400).send({ message: "Missing fields" });
     }
 
     // Create a new user with the provided data
@@ -147,36 +147,36 @@ export const get = async (req: Request, res: Response) => {
   }
 }
 
-export async function patch(req: Request, res: Response) {
-   try {
-       const { id } = req.params
-       const { displayName, password, email, role } = req.body
+export const patch = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const { displayName, password, email, role } = req.body
 
-       if (!id || !displayName || !password || !email || !role) {
-           return res.status(400).send({ message: "Missing fields" })
-       }
+    if (!id || !displayName || !password || !email || !role) {
+      res.status(400).send({ message: "Missing fields" })
+    }
 
-       await admin.auth().updateUser(id, { displayName, password, email })
-       await admin.auth().setCustomUserClaims(id, { role })
-       const user = await admin.auth().getUser(id)
+    await admin.auth().updateUser(id, { displayName, password, email })
+    await admin.auth().setCustomUserClaims(id, { role })
+    const user = await admin.auth().getUser(id)
 
-       return res.status(204).send({ user: mapUser(user) })
-   } catch (err) {
-       return handleError(res, err)
-   }
+    res.status(204).send({ user: mapUser(user) })
+  }catch (err) {
+    handleError(res, err)
+  }
 }
 
-export async function remove(req: Request, res: Response) {
-   try {
-       const { id } = req.params
-       await admin.auth().deleteUser(id)
-       return res.status(204).send({})
-   } catch (err) {
-       return handleError(res, err)
-   }
+export const remove = async(req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    await admin.auth().deleteUser(id)
+    return res.status(204).send({})
+  } catch (err) {
+    return handleError(res, err)
+  }
 }
 
 
-function handleError(res: Response, err: any) {
+export const handleError = async(res: Response, err: any) => {
   return res.status(500).send({ message: `${err.code} - ${err.message}` });
 }
