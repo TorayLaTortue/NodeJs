@@ -7,7 +7,7 @@
     "lint": "tsc --noEmit && eslint --ext .js,.ts .",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "concurrently \"npm run build:watch\" \"firebase emulators:start --only functions\"",
+    "serve": "concurrently \"npm run build:watch\" \"firebase emulators:start --import=./exports --export-on-exit\"",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "firebase-admin": "^12.0.0",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
     "@types/mongoose": "^5.11.97",
     "@types/mongoose-unique-validator": "^1.0.9",
     "@typescript-eslint/eslint-plugin": "^5.12.0",

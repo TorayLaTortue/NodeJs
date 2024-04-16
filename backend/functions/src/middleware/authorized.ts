@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import { Roles } from "src/routes/user";
 
-export const isAuthorized = (opts: { hasRole: Array<"admin" | "manager" | "user">, allowSameUser?: boolean }) => {
+export const isAuthorized = (opts: { hasRole: Roles[], allowSameUser?: boolean }) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { role, email, uid } = res.locals
     const { id } = req.params

@@ -7,18 +7,25 @@ import stuffRoutes from "./routes/stuff.js";
 // import userRoutes from "./routes/user.js";
 import * as dotenv from "dotenv";
 import { userRoutes } from "./routes/user.js";
+import cors from "cors";
+import * as bodyParser from "body-parser";
 
 dotenv.config();
 
-initializeApp();
-
 const app: express.Application = express();
+
+app.use(bodyParser.json());
+app.use(cors({ origin: true }));
 
 const mongodbUrl: string | undefined = process.env.MONGODB_URL;
 
 if (!mongodbUrl) {
   throw new Error("MONGODB_URL is not defined");
 }
+
+initializeApp();
+
+
 
 mongoose
   .connect(mongodbUrl, {

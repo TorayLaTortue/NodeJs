@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import User,{UserInterface} from "../models/User.js";
 import jwt from "jsonwebtoken";
 import * as admin from "firebase-admin";
+import { Roles } from "src/routes/user.js";
 
 export const signup = async (
   req: Request,
@@ -70,15 +71,15 @@ export const create = async (
     }
 
     // Create a new user with the provided data
-    const userRole: UserInterface = new User({
-      displayName,
-      email,
-      password,
-      role,
-    });
+    // const userRole: UserInterface = new User({
+    //   displayName,
+    //   email,
+    //   password,
+    //   role,
+    // });
 
     // Save the user to the database
-    await userRole.save();
+    // await userRole.save();
 
     // Create Firebase user
     const { uid } = await admin.auth().createUser({
@@ -125,7 +126,7 @@ export const all = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const mapUser = async (user: admin.auth.UserRecord) => {
-  const customClaims = (user.customClaims || { role: "" }) as { role?: string }
+  const customClaims = (user.customClaims || { role: "" }) as { role?: Roles }
   const role = customClaims.role ? customClaims.role : ""
   return {
     uid: user.uid,
