@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import User,{UserInterface} from "../models/User.js";
 import jwt from "jsonwebtoken";
 import * as admin from "firebase-admin";
-import { Roles } from "src/routes/user.js";
+import { Roles } from "src/models/User.js";
 
 export const signup = async (
   req: Request,
@@ -200,22 +200,21 @@ export const patch = async (req: Request, res: Response) => {
 export const patchMdp = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { displayName, password, email, role } = req.body;
+    const { password } = req.body;
 
-    if (!id || !displayName || !password || !email || !role) {
+    if (!id || !password) {
       res.status(400).send({ message: "Missing fields" });
       return res;
     }
 
     // Update user in Firebase
-    await admin.auth().updateUser(id, { displayName, password, email });
-    await admin.auth().setCustomUserClaims(id, { role });
+    await admin.auth().updateUser(id, { password });
     const firebaseUser = await admin.auth().getUser(id);
 
     // Update user in MongoDB
     const updatedUser = await User.findOneAndUpdate(
       { uid: id },
-      { displayName, password, email, role },
+      { password },
       { new: true }
     );
 
@@ -228,7 +227,7 @@ export const patchMdp = async (req: Request, res: Response) => {
       message += " and Firebase";
     }
 
-    return res.status(200).send({ message, user: mapUser(firebaseUser) });
+    return res.status(200).send({ message, user: mapUser(firebaseUser), password });
   } catch (err) {
     handleError(res, err);
     return res;

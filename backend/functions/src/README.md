@@ -12,3 +12,7 @@ npm install mongoose
 nodemon server server.js
 
 npm install bcrypt
+
+firebase mongoose : 
+
+npm run serve

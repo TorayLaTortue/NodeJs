@@ -2,15 +2,11 @@ import express, { Application } from "express";
 import * as userCtrl from "../controllers/user.js";
 import { isAuthenticated } from "../middleware/authenticated.js";
 import { isAuthorized } from "../middleware/authorized.js";
+import { Roles } from "src/models/User.js";
+
 
 // eslint-disable-next-line new-cap
 // const router: Router = express.Router();
-
-export enum Roles {
-  admin = "admin",
-  manager ="manager",
-  user ="user"
-}
 
 /**
  * ## User Routes
@@ -46,6 +42,12 @@ export const userRoutes = (app: Application) => {
   userRouter.put("/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
     userCtrl.patch
+  ]);
+
+  // updates Mdp :id user
+  userRouter.put("/password/:id", [
+    isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
+    userCtrl.patchMdp
   ]);
 
   // deletes :id user

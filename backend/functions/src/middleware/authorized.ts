@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Roles } from "src/routes/user";
+import { Roles } from "src/models/User.js";
 
 export const isAuthorized = (opts: { hasRole: Roles[], allowSameUser?: boolean }) => {
   return (req: Request, res: Response, next: NextFunction) => {
