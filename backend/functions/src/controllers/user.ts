@@ -70,17 +70,6 @@ export const create = async (
       res.status(400).send({ message: "Missing fields" });
     }
 
-    // Create a new user with the provided data
-    // const userRole: UserInterface = new User({
-    //   displayName,
-    //   email,
-    //   password,
-    //   role,
-    // });
-
-    // Save the user to the database
-    // await userRole.save();
-
     // Create Firebase user
     const { uid } = await admin.auth().createUser({
       displayName,
@@ -90,6 +79,25 @@ export const create = async (
 
     // Set custom user claims
     await admin.auth().setCustomUserClaims(uid, { role });
+
+    console.log(uid);
+    // Create a new user with the provided data
+    const userRole: UserInterface = new User({
+      displayName,
+      email,
+      password,
+      role,
+      uid: uid,
+    }); 
+
+    // Save the user to the database
+    try {
+      // Code pour sauvegarder l'utilisateur dans MongoDB
+      await userRole.save();
+      console.log("Utilisateur enregistré dans MongoDB avec succès.");
+    } catch (error) {
+      console.error("Erreur lors de l'enregistrement de l'utilisateur dans MongoDB :", error);
+    }
 
     // Send success response
     res.status(201).json({
@@ -118,16 +126,19 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
 export const all = async (req: Request, res: Response): Promise<void> => {
   try {
     const listUsers = await admin.auth().listUsers()
-    const users = listUsers.users.map(mapUser)
+    console.log(listUsers)
+    const users = listUsers.users.map(user => mapUser(user))
+    console.log(mapUser)
     res.status(200).send({ users })
   } catch (err) {
     handleError(res, err)
   }
 }
 
-export const mapUser = async (user: admin.auth.UserRecord) => {
+export const mapUser = (user: admin.auth.UserRecord) => {
   const customClaims = (user.customClaims || { role: "" }) as { role?: Roles }
   const role = customClaims.role ? customClaims.role : ""
+
   return {
     uid: user.uid,
     email: user.email || "",
@@ -150,30 +161,101 @@ export const get = async (req: Request, res: Response) => {
 
 export const patch = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params
-    const { displayName, password, email, role } = req.body
+    const { id } = req.params;
+    const { displayName, email, role } = req.body;
 
-    if (!id || !displayName || !password || !email || !role) {
-      res.status(400).send({ message: "Missing fields" })
+    if (!id || !displayName || !email || !role) {
+      res.status(400).send({ message: "Missing fields" });
+      return res;
     }
 
-    await admin.auth().updateUser(id, { displayName, password, email })
-    await admin.auth().setCustomUserClaims(id, { role })
-    const user = await admin.auth().getUser(id)
+    // Update user in Firebase
+    await admin.auth().updateUser(id, { displayName, email });
+    await admin.auth().setCustomUserClaims(id, { role });
+    const firebaseUser = await admin.auth().getUser(id);
 
-    res.status(204).send({ user: mapUser(user) })
-  }catch (err) {
-    handleError(res, err)
+    // Update user in MongoDB
+    const updatedUser = await User.findOneAndUpdate(
+      { uid: id },
+      { displayName, email, role },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).send({ message: "User not found in MongoDB" });
+    }
+
+    let message = "User updated successfully in MongoDB";
+    if (firebaseUser) {
+      message += " and Firebase";
+    }
+
+    return res.status(200).send({ message, user: mapUser(firebaseUser) });
+  } catch (err) {
+    handleError(res, err);
+    return res;
+  }
+}
+
+export const patchMdp = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { displayName, password, email, role } = req.body;
+
+    if (!id || !displayName || !password || !email || !role) {
+      res.status(400).send({ message: "Missing fields" });
+      return res;
+    }
+
+    // Update user in Firebase
+    await admin.auth().updateUser(id, { displayName, password, email });
+    await admin.auth().setCustomUserClaims(id, { role });
+    const firebaseUser = await admin.auth().getUser(id);
+
+    // Update user in MongoDB
+    const updatedUser = await User.findOneAndUpdate(
+      { uid: id },
+      { displayName, password, email, role },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).send({ message: "User not found in MongoDB" });
+    }
+
+    let message = "User updated successfully in MongoDB";
+    if (firebaseUser) {
+      message += " and Firebase";
+    }
+
+    return res.status(200).send({ message, user: mapUser(firebaseUser) });
+  } catch (err) {
+    handleError(res, err);
+    return res;
   }
 }
 
 export const remove = async(req: Request, res: Response) => {
   try {
-    const { id } = req.params
-    await admin.auth().deleteUser(id)
-    return res.status(204).send({})
+    const { id } = req.params;
+
+    // Delete user in Firebase
+    await admin.auth().deleteUser(id).catch((firebaseError) => {
+      console.error("Error deleting user in Firebase:", firebaseError);
+      return res.status(404).send({ message: "Error deleting user in Firebase" });
+    });
+
+    // Delete user in MongoDB
+    const deletedUser = await User.findOneAndDelete({ uid: id });
+
+    if (!deletedUser) {
+      return res.status(404).send({ message: "User not found in MongoDB" });
+    }
+
+    return res.status(200).send({ message: "User deleted successfully in MongoDB and Firebase"});
   } catch (err) {
-    return handleError(res, err)
+    console.error("Error deleting user:", err);
+    return res.status(500).send({ message: "Internal server error" });
   }
 }
 

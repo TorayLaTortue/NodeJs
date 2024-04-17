@@ -6,7 +6,7 @@ export const isAuthorized = (opts: { hasRole: Roles[], allowSameUser?: boolean }
     const { role, email, uid } = res.locals
     const { id } = req.params
 
-    if (email === "damien.pasquer3636@gmail.com@gmail.com")
+    if (email === "damien.pasquer3636@gmail.com")
       return next();
 
     if (opts.allowSameUser && id && uid === id)

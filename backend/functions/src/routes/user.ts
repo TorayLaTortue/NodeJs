@@ -1,4 +1,4 @@
-import { Application } from "express";
+import express, { Application } from "express";
 import * as userCtrl from "../controllers/user.js";
 import { isAuthenticated } from "../middleware/authenticated.js";
 import { isAuthorized } from "../middleware/authorized.js";
@@ -17,43 +17,44 @@ export enum Roles {
  * @param {Application} app: Main expresse app process
  */
 export const userRoutes = (app: Application) => {
+  // eslint-disable-next-line new-cap
+  const userRouter = express.Router();
+  
+  userRouter.use(isAuthenticated);
+
+
   app.post("/signup", userCtrl.signup);
   app.post("/login", userCtrl.login);
-  
-  // app.get("/allUser", userCtrl.getAllUsers);
 
-  app.post("/users", [
-    isAuthenticated,
+  userRouter.post("/", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),
     userCtrl.create
   ]);
 
-  app.get("/users", [
-    // isAuthenticated,
-    // isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),
+  userRouter.get("/", [
+    isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),
     userCtrl.all
   ]);
 
   // get :id user
-  app.get("/users/:id", [
-    isAuthenticated,
+  userRouter.get("/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
     userCtrl.get
   ]);
 
   // updates :id user
-  app.patch("/users/:id", [
-    isAuthenticated,
+  userRouter.put("/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
     userCtrl.patch
   ]);
 
   // deletes :id user
-  app.delete("/users/:id", [
-    isAuthenticated,
+  userRouter.delete("/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),
     userCtrl.remove
   ]);
+
+  app.use("/users", userRouter);
 }
 
 /**
