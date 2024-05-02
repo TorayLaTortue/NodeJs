@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import * as userCtrl from "../controllers/user.js";
 import { isAuthenticated } from "../middleware/authenticated.js";
 import { isAuthorized } from "../middleware/authorized.js";
-import { Roles } from "src/models/User.js";
+import { Roles } from "../models/User.js";
 
 
 // eslint-disable-next-line new-cap
