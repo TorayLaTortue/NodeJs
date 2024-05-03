@@ -25,7 +25,9 @@ pnpm install
 #### Run
 
 ```
-pnpm dev
+pnpm dev  
+
+^^^^
 ```
 
 #### Paths
