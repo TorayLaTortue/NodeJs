@@ -2,8 +2,8 @@ import React from 'react';
 import { useStore } from 'react-redux';
 
 interface Product {
-  title: string;
-  price: number;
+  userName: string;
+  counter: number;
 }
 
 const Cart: React.FC = () => {
@@ -15,7 +15,7 @@ const Cart: React.FC = () => {
       <h1>Liste de produits sélectionnés</h1>
       {productList.map((item, index) => (
         <span key={index} className="SelectedProduct">
-          {item.title} {item.price} €
+          {item.userName} {item.counter} €
         </span>
       ))}
     </div>

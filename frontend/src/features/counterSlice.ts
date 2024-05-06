@@ -4,27 +4,36 @@ interface CounterState {
   count: number;
 }
 
-// Define the initial state for the slice
-const initialState: CounterState = {
+const loadStateFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('counterState');
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState) as CounterState;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+const initialState: CounterState = loadStateFromLocalStorage() || {
   count: 0,
 };
 
-// Create the slice
 const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
     increment: (state, action: PayloadAction<number>) => {
       state.count += action.payload;
+      localStorage.setItem('counterState', JSON.stringify(state));
     },
     decrement: (state, action: PayloadAction<number>) => {
       state.count -= action.payload;
+      localStorage.setItem('counterState', JSON.stringify(state));
     },
   },
 });
 
-// Extract the reducer function from the slice
 export const counterReducer = counterSlice.reducer;
-
-// Extract action creators from the slice
 export const { increment, decrement } = counterSlice.actions;
