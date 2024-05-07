@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setToken } from '@/features/user/userSlice';
 
 const Authorized = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  console.log(`${import.meta.env.API_KEY}`)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword', {
+      const response = await fetch(`http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -21,12 +25,16 @@ const Authorized = () => {
       });
 
       if (!response.ok) {
+        console.log(email + " " + password);
         throw new Error('Failed to sign in');
       }
 
       const data = await response.json();
       console.log('Logged in successfully:', data);
 
+      dispatch(setToken(data.idToken));
+      console.log(data.idToken)
+      
     } catch (error) {
       console.error('Error signing in:', error);
     }
@@ -46,9 +54,7 @@ const Authorized = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      
     </div>
-    
   );
 };
 

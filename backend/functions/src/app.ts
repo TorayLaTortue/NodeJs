@@ -16,6 +16,7 @@ const app: express.Application = express();
 
 app.use(bodyParser.json());
 app.use(cors({ origin: true }));
+app.options("*", cors());
 
 const mongodbUrl: string | undefined = process.env.MONGODB_URL;
 

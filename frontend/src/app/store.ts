@@ -3,11 +3,13 @@ import { apiSlice } from './api/apiSlice';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userReducer from '@/features/user/userSlice';
 import { counterReducer } from '@/features/counterSlice';
+import idTokenReducer from '@/features/user/userSlice'
 
 const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     // Add your reducers here
+    idToken: idTokenReducer,
     counter: counterReducer,
     user: userReducer,
   },

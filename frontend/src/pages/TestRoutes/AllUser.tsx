@@ -1,13 +1,12 @@
 import React from 'react';
-import Authorized from '@/routes/Authorized';
 import UserList from '@/routes/Users';
 
 const Login = () => {
 
   return <div>
     Login
-    <h2>Connexion</h2>
-      <Authorized />
+    <h2>UserList</h2>
+      <UserList />
     </div>;
 };
 

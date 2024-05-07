@@ -13,11 +13,12 @@ export const isAuthorized = (opts: { hasRole: Roles[], allowSameUser?: boolean }
       return next();
 
     if (!role)
-      return res.status(403).send();
+      return res.status(403).send("role");
 
     if (opts.hasRole.includes(role))
       return next();
 
+    console.log(email)
     return res.status(403).send();
   }
 }

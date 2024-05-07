@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: null,
+  idToken: null,
   user: null,
   mode: localStorage.getItem('mode')
     ? localStorage.getItem('mode')
@@ -15,11 +15,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      state.token = action.payload.token;
       state.user = action.payload.user;
+      console.log(state.user);
     },
     setToken: (state, action) => {
-      state.token = action.payload;
+      state.idToken = action.payload;
+      console.log(state.idToken )
     },
     changeMode: (state) => {
       if (state.mode === 'light') {
