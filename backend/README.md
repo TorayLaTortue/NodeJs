@@ -1,6 +1,6 @@
 cd frontend
 npm install
-npm run start
+pnpm run start
 
 back :
 npm init
@@ -16,5 +16,5 @@ npm install bcrypt
 firebase mongoose : 
 
 
-
+    cd functions
     npm run serve

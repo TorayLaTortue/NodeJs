@@ -1,4 +1,4 @@
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import Routing from './routes/Routing';
 import store from './app/store';
@@ -10,11 +10,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
-      <div className="App">
-        </div>
-    </Provider>
+        <Routing />
+      </Provider>
       <CssBaseline />
-      <Routing />
     </BrowserRouter>
   );
 };

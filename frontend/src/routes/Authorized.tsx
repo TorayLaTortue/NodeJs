@@ -1,39 +1,26 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setToken } from '@/features/user/userSlice';
+import { setCredentials } from '@/features/user/userSlice';
+import UserList from '@/routes/Users';
+import { useAppDispatch } from '@/app/store';
+import { signInUser } from '@/services/firebaseServices';
 
 const Authorized = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log(`${import.meta.env.API_KEY}`)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     try {
-      const response = await fetch(`http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.API_KEY}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          returnSecureToken: true
-        })
-      });
-
-      if (!response.ok) {
-        console.log(email + " " + password);
-        throw new Error('Failed to sign in');
+      const user = await signInUser(email, password);
+      if (!user) {
+        throw new Error('User not find');
       }
 
-      const data = await response.json();
-      console.log('Logged in successfully:', data);
-
-      dispatch(setToken(data.idToken));
-      console.log(data.idToken)
+      dispatch(setCredentials({ user: user.info, token: user.idToken }));
+      console.log("data id token", user.idToken);
+      UserList;
       
     } catch (error) {
       console.error('Error signing in:', error);
