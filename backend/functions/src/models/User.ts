@@ -11,6 +11,7 @@ export interface UserInterface extends Document {
   displayName: string;
   email: string;
   password: string;
+  photoURL: string;
   role: Roles; 
   uid: string;
 }
@@ -20,7 +21,8 @@ const userSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: {type: String, required: true, enum: Object.values(Roles) },
-  uid: {type: String, required: true, unique: true}
+  photoURL: {type: String, required: false},
+  uid: {type: String, required: true, unique: true},
 });
 
 userSchema.plugin(uniqueValidator);

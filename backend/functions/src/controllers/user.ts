@@ -14,6 +14,7 @@ export const signup = async (
     const user = new User({
       email: req.body.email,
       password: hashedPassword,
+      photoURL: req.body.photoURL,
     });
     await user.save();
     res.status(201).json({ message: "Utilisateur créé !" });
@@ -57,36 +58,37 @@ export const login = (
 };
 
 
-// { displayName: string, password: string, email: string, role: string }
+// { displayName: string, password: string, email: string, role: string ,photoURL: string}
 export const create = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const { displayName, password, email, role } = req.body;
+    const { displayName, password, email, role, photoURL } = req.body;
 
     // Check if any required field is missing
-    if (!displayName || !password || !email || !role) {
+    if (!displayName || !password || !email || !role || !photoURL) {
       res.status(400).send({ message: "Missing fields" });
     }
 
     // Create Firebase user
     const { uid } = await admin.auth().createUser({
       displayName,
-      password,
       email,
+      password,
+      photoURL,
     });
 
     // Set custom user claims
     await admin.auth().setCustomUserClaims(uid, { role });
 
-    console.log(uid);
     // Create a new user with the provided data
     const userRole: UserInterface = new User({
       displayName,
       email,
       password,
       role,
+      photoURL,
       uid: uid,
     }); 
 
@@ -144,6 +146,7 @@ export const mapUser = (user: admin.auth.UserRecord) => {
     email: user.email || "",
     displayName: user.displayName || "",
     role,
+    photoURL: user.photoURL || "",
     lastSignInTime: user.metadata.lastSignInTime,
     creationTime: user.metadata.creationTime
   }
@@ -162,22 +165,22 @@ export const get = async (req: Request, res: Response) => {
 export const patch = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { displayName, email, role } = req.body;
+    const { displayName, email, role, photoURL } = req.body;
 
-    if (!id || !displayName || !email || !role) {
+    if (!id || !displayName || !email || !role || !photoURL) {
       res.status(400).send({ message: "Missing fields" });
       return res;
     }
 
     // Update user in Firebase
-    await admin.auth().updateUser(id, { displayName, email });
+    await admin.auth().updateUser(id, { displayName, email, photoURL });
     await admin.auth().setCustomUserClaims(id, { role });
     const firebaseUser = await admin.auth().getUser(id);
 
     // Update user in MongoDB
     const updatedUser = await User.findOneAndUpdate(
       { uid: id },
-      { displayName, email, role },
+      { displayName, email, role, photoURL },
       { new: true }
     );
 
@@ -234,29 +237,46 @@ export const patchMdp = async (req: Request, res: Response) => {
   }
 }
 
-export const remove = async(req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
     // Delete user in Firebase
-    await admin.auth().deleteUser(id).catch((firebaseError) => {
+    let firebaseMessage = '';
+    await admin.auth().deleteUser(id).then(() => {
+      firebaseMessage = 'User deleted successfully in Firebase';
+    }).catch((firebaseError) => {
       console.error("Error deleting user in Firebase:", firebaseError);
-      return res.status(404).send({ message: "Error deleting user in Firebase" });
+      firebaseMessage = 'Error deleting user in Firebase';
     });
 
     // Delete user in MongoDB
     const deletedUser = await User.findOneAndDelete({ uid: id });
 
+    let mongoDBMessage = '';
     if (!deletedUser) {
-      return res.status(404).send({ message: "User not found in MongoDB" });
+      mongoDBMessage = 'User not found in MongoDB';
+    } else {
+      mongoDBMessage = 'User deleted successfully in MongoDB';
     }
 
-    return res.status(200).send({ message: "User deleted successfully in MongoDB and Firebase"});
+    // Send response
+    let message = '';
+    if (firebaseMessage && mongoDBMessage) {
+      message = `${firebaseMessage} and ${mongoDBMessage}`;
+    } else if (firebaseMessage) {
+      message = firebaseMessage;
+    } else if (mongoDBMessage) {
+      message = mongoDBMessage;
+    }
+
+    return res.status(200).send({ message });
   } catch (err) {
     console.error("Error deleting user:", err);
     return res.status(500).send({ message: "Internal server error" });
   }
-}
+};
+
 
 
 export const handleError = async(res: Response, err: any) => {
