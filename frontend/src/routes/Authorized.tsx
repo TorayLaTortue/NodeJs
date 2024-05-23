@@ -20,6 +20,7 @@ const Authorized = () => {
 
       dispatch(setCredentials({ user: user.info, token: user.idToken }));
       console.log("data id token", user.idToken);
+      console.log("user info", user.info);
       UserList;
       
     } catch (error) {

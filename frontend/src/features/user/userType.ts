@@ -8,6 +8,7 @@ export type UserType = {
     displayName: string;
     email: string;
     role: Roles;
+    photoURL: string;
     uid: string;
     // All others field
 };

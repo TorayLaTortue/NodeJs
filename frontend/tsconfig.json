@@ -20,7 +20,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/components/NavBar/.ts"],
   "exclude": ["node_modules", "**/node_modules/*", "dist", "**/dist/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

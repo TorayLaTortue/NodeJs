@@ -1,12 +1,13 @@
 import React from 'react';
 import Authorized from '@/routes/Authorized';
 import UserList from '@/routes/Users';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
   return <div>
-    Login
     <h2>Connexion</h2>
+    <Link to="/auth/register">Pas de compte ?</Link>
       <Authorized />
     </div>;
 };

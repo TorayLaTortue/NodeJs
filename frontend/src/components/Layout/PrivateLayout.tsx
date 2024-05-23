@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/app/store"
 import { removeCredentials } from "@/features/user/userSlice";
 import { PropsWithChildren } from "react"
 import { Link } from "react-router-dom"
+import ResponsiveAppBar from "../NavBar/AppBarHome";
 
 export const PrivateLayout = (props: PropsWithChildren) => {
     const dispatch = useAppDispatch();
@@ -11,7 +12,8 @@ export const PrivateLayout = (props: PropsWithChildren) => {
     }
 
     return (
-        <div style={{ background: 'red' }} className="private-layout">
+        <div style={{ background: 'black' }} className="private-layout">
+            <ResponsiveAppBar />
           <div className="sidebar">
             <Link to="/dashboard/profile">Mon profil</Link>
             <Link to="/dashboard/command">Mes commandes</Link>

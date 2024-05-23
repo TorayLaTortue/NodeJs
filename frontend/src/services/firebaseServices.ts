@@ -41,7 +41,8 @@ const parseUserCredential = async (userCredential: UserCredential): Promise<{ in
             displayName: user.displayName ?? 'Anonymous',
             email: user.email ?? 'unknown@unknown.com',
             uid: user.uid ?? '00000',
-            role: idToken.claims.role as Roles ?? 'user'
+            role: idToken.claims.role as Roles ?? 'user',
+            photoURL: user.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
         },
         idToken: idToken.token
     });
