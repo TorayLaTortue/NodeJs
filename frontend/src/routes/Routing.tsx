@@ -77,4 +77,6 @@ const RestrictedRoute = (props: { roles: Roles[] }) => {
   return isAthenttificated && user && props.roles.includes(user.role) ? <Outlet/> : <div>Access denied</div>;
 }
 
+
+
 export default Routing;

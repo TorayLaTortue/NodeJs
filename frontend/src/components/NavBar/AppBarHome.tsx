@@ -20,35 +20,27 @@ function ResponsiveAppBar() {
   const userName = useAppSelector((state) => state.user.info?.displayName);
   const photoURL = useAppSelector((state) => state.user.info?.photoURL);
   const idToken = useAppSelector((state) => state.user.idToken);
-  let pages = [];
-  let settings = [];
+  let pages: { label: string; path: string | null; }[] = [];
+  let settings: { label: string; path: string | null; }[] = [];
 
-  if(idToken !== null){
-    pages = [
+   pages = [
     { label: 'Home', path: '/' },
     { label: 'Settings', path: '/dashboard/settings' },
-    { label: 'Logout', path: null } 
   ];
-
-  settings = [
+  
+   settings = [
     { label: 'Profile', path: '/profile' },
-    { label: 'Dashboard', path: '/dashboard' },
-    { label: 'Logout', path: null }
+    { label: 'Dashboard', path: '/dashboard/profile' },
   ];
+  
+  if (idToken !== null) {
+    pages.push({ label: 'Logout', path: null });
+    settings.push({ label: 'Logout', path: null });
+  } else {
+    pages.push({ label: 'Login', path: '/auth/login' });
+    settings.push({ label: 'Login', path: '/auth/login' });
   }
-  else{
-    pages = [
-      { label: 'Home', path: '/' },
-      { label: 'Settings', path: '/dashboard/settings' },
-      { label: 'Login', path: '/auth/login' } 
-    ];
-    
-    settings = [
-      { label: 'Profile', path: '/profile' },
-      { label: 'Dashboard', path: '/dashboard' },
-      { label: 'Login', path: '/auth/login' }
-    ];
-  }
+
 
   const dispatch = useAppDispatch();
 
@@ -79,7 +71,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+        <Avatar src={'https://cdn.discordapp.com/attachments/831571160114266112/1229513804380114954/image.png?ex=665041b6&is=664ef036&hm=9f942d634ca4b767e732f298f4bfd0e44992388cedfb9d7c6b402b8bd6052535&'} /> {/* Logo */}
           <Typography
             variant="h6"
             noWrap
@@ -95,7 +87,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Toray
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -145,7 +137,6 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -162,7 +153,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Toray
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -216,9 +207,6 @@ function ResponsiveAppBar() {
                   </Typography>
                 </MenuItem>
               ))}
-              <MenuItem onClick={logout}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
