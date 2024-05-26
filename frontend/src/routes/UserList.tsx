@@ -1,11 +1,13 @@
 import { useAppSelector } from '@/app/store';
-import { selectUserIdToken } from '@/features/user/userSelectors';
+import { selectAuthIdToken } from '@/features/auth/authSelectors';
 import { UserType } from '@/features/user/userType';
 import React, { useEffect, useState } from 'react';
 
-const UserInfo: React.FC = () => {
+const UserList: React.FC = () => {
   const [users, setUsers] = useState<UserType[]>([]);
-  const idToken = useAppSelector(selectUserIdToken);
+  const idToken = useAppSelector(selectAuthIdToken);
+
+  console.log('idToken', idToken);
 
   useEffect(() => {
     fetchUsers();
@@ -50,4 +52,4 @@ const UserInfo: React.FC = () => {
   );
 };
 
-export default UserInfo;
+export default UserList;

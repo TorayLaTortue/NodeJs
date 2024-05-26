@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from './api/apiSlice';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userReducer from '@/features/user/userSlice';
+import authReducer from '@/features/auth/authSlice';
 import { counterReducer } from '@/features/counterSlice';
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     // Add your reducers here
     counter: counterReducer,
+    auth: authReducer,
     user: userReducer,
   },
   devTools: import.meta.env.DEV,

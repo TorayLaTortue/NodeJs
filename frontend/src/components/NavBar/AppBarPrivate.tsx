@@ -11,50 +11,34 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/app/store';
 import { removeUser } from '@/features/user/userSlice';
-import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import { removeCredentials } from '@/features/auth/authSlice';
+import { selectUserInfo } from '@/features/user/userSelectors';
 
-function ResponsiveAppBarHome() {
-  const userName = useAppSelector((state) => state.user.info?.displayName);
-  const photoURL = useAppSelector((state) => state.user.info?.photoURL);
-  const role = useAppSelector((state) => state.user.info?.role);
-  const isAuth = useAppSelector(selectIsAuthentificated);
+function ResponsiveAppBarHomePrivate() {
+  const userInfo= useAppSelector(selectUserInfo);
   let pages: { label: string; path: string | null; }[] = [];
   let settings: { label: string; path: string | null; }[] = [];
 
    pages = [
-    { label: 'Home', path: '/' },
+    { label: 'MainPage', path: '/dashboard/admin' },
     { label: 'Settings', path: '/dashboard/settings' },
+    { label: 'Search User', path: '/dashboard/admin/user' },
+    { label: 'User List', path: '/dashboard/admin/users' },
   ];
   
    settings = [
-    { label: 'Profile', path: '/profile' },
-    { label: 'Dashboard', path: '/dashboard/profile' },
+    { label: 'MainPage', path: '/dashboard/admin' },
+    { label: 'Settings', path: '/dashboard/settings' },
+    { label: 'Search User', path: '/dashboard/admin/user' },
+    { label: 'User List', path: '/dashboard/admin/users' },
   ];
-  
-  if (isAuth) {
-    pages.push({ label: 'Logout', path: null });
-    settings.push({ label: 'Logout', path: null });
-  } else {
-    pages.push({ label: 'Login', path: '/auth/login' });
-    settings.push({ label: 'Login', path: '/auth/login' });
-  }
-  if(role == 'admin')
-    {
-      pages.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
-      settings.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
-    }
-
 
   const dispatch = useAppDispatch();
 
   const logout = () => {
     dispatch(removeUser());
-    dispatch(removeCredentials());
   };
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -181,7 +165,7 @@ function ResponsiveAppBarHome() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={userName} src={photoURL} />
+                <Avatar alt={userInfo?.displayName} src={userInfo?.photoURL} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -224,4 +208,4 @@ function ResponsiveAppBarHome() {
   );
 }
 
-export default ResponsiveAppBarHome;
+export default ResponsiveAppBarHomePrivate;

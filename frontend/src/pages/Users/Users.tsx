@@ -1,7 +1,7 @@
 import React from 'react';
-import UserList from '@/routes/Users';
+import UserList from '@/routes/UserList';
 
-const Login = () => {
+const Users = () => {
 
   return <div>
     Login
@@ -10,4 +10,4 @@ const Login = () => {
     </div>;
 };
 
-export default Login;
+export default Users;

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { setCredentials } from '@/features/user/userSlice';
-import UserList from '@/routes/Users';
+import { setUser } from '@/features/user/userSlice';
+import UserList from '@/routes/UserList';
 import { useAppDispatch } from '@/app/store';
-import { signInUser } from '@/services/firebaseServices';
+import { signInUser } from '@/features/auth/authServices';
+import { setCredentials } from '@/features/auth/authSlice';
 
 const Authorized = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,8 @@ const Authorized = () => {
         throw new Error('User not find');
       }
 
-      dispatch(setCredentials({ user: user.info, token: user.idToken }));
+      dispatch(setUser({ user: user.info }));
+      dispatch(setCredentials({ idToken: user.idToken }));
       console.log("data id token", user.idToken);
       console.log("user info", user.info);
       UserList;

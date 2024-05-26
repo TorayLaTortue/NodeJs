@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserType } from '@/features/user/userType';
 
 type UserStateType = {
-  idToken: string | null;
   info: UserType | null;
   mode: 'light' | 'dark';
 }
@@ -19,7 +18,6 @@ const loadUserStateFromLocalStorage = () => {
 
 const initialState: UserStateType = {
   info: loadUserStateFromLocalStorage() || null,
-  idToken: localStorage.getItem('token') || null,
   mode: localStorage.getItem('mode')
     ? localStorage.getItem('mode') as 'light' | 'dark'
     : window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -31,18 +29,13 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setCredentials: (state, action) => {
+    setUser: (state, action) => {
       state.info = action.payload.user;
-      state.idToken = action.payload.token;
       localStorage.setItem('userState', JSON.stringify(action.payload.user));
-      localStorage.setItem('token', action.payload.token);
-      console.log(state.info);
     },
-    removeCredentials: (state) => {
+    removeUser: (state) => {
       state.info = null;
-      state.idToken = null;
       localStorage.removeItem('userState');
-      localStorage.removeItem('token');
     },
     changeMode: (state) => {
       if (state.mode === 'light') {
@@ -58,6 +51,6 @@ export const userSlice = createSlice({
 
 
 
-export const { setCredentials, removeCredentials, changeMode } = userSlice.actions;
+export const { setUser, removeUser, changeMode } = userSlice.actions;
 
 export default userSlice.reducer;

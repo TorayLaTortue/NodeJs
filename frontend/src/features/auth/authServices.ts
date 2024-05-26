@@ -1,6 +1,9 @@
+import store from '@/app/store';
 import { Roles, UserType } from '@/features/user/userType';
 import { initializeApp } from 'firebase/app';
-import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
+import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, setPersistence, onAuthStateChanged, User } from 'firebase/auth';
+import { removeCredentials, setCredentials } from './authSlice';
+import { removeUser, setUser } from '../user/userSlice';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY, 
@@ -21,8 +24,9 @@ if (import.meta.env.DEV) {
 
 // Sign in user on firebase and return user info
 export const signInUser = async (email: string, password: string): Promise<{ info: UserType, idToken: string } | void> => {
+    await setPersistence(auth, { type: 'LOCAL' });
     const user = await signInWithEmailAndPassword(auth, email, password)
-        .then(parseUserCredential)
+        .then(userCredential => parseUserCredential(userCredential.user))
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -32,9 +36,9 @@ export const signInUser = async (email: string, password: string): Promise<{ inf
 }
 
 // parse user from firebase to app user
-const parseUserCredential = async (userCredential: UserCredential): Promise<{ info: UserType, idToken: string }> => {
-    const user = userCredential.user;
-    const idToken = await user.getIdTokenResult();
+const parseUserCredential = async (user: User | null): Promise<{ info: UserType, idToken: string } | void> => {
+    if (!user) return;
+    const idToken = await user.getIdTokenResult(true);
 
     return ({
         info: {
@@ -47,3 +51,23 @@ const parseUserCredential = async (userCredential: UserCredential): Promise<{ in
         idToken: idToken.token
     });
 }
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      const connectedUser = await parseUserCredential(user);
+      if (connectedUser) {
+        store.dispatch(setCredentials({
+            idToken: connectedUser.idToken
+        }));
+        store.dispatch(setUser({
+            info: connectedUser.info
+        }));
+      }
+      // ...
+    } else {
+        store.dispatch(removeCredentials());
+        store.dispatch(removeUser());
+    }
+  });
