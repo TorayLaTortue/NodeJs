@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/app/store';
 import { removeUser } from '@/features/user/userSlice';
@@ -28,26 +27,24 @@ function ResponsiveAppBarHome() {
 
    pages = [
     { label: 'Home', path: '/' },
-    { label: 'Settings', path: '/dashboard/settings' },
+    { label: 'Profile', path: '/profil/user' },
   ];
   
    settings = [
-    { label: 'Profile', path: '/profile' },
-    { label: 'Dashboard', path: '/dashboard/profile' },
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Profile', path: '/profil/user' },
   ];
   
-  if (isAuth) {
-    pages.push({ label: 'Logout', path: null });
-    settings.push({ label: 'Logout', path: null });
-  } else {
-    pages.push({ label: 'Login', path: '/auth/login' });
-    settings.push({ label: 'Login', path: '/auth/login' });
-  }
   if(role == 'admin')
     {
       pages.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
       settings.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
     }
+  if (isAuth) {
+    settings.push({ label: 'Logout', path: null });
+  } else {
+    settings.push({ label: 'Login', path: '/auth/login' });
+  }
 
 
   const dispatch = useAppDispatch();

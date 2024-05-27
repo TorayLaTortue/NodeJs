@@ -1,7 +1,7 @@
 import store from '@/app/store';
 import { Roles, UserType } from '@/features/user/userType';
 import { initializeApp } from 'firebase/app';
-import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, setPersistence, onAuthStateChanged, User } from 'firebase/auth';
+import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, setPersistence, onAuthStateChanged, User, browserLocalPersistence } from 'firebase/auth';
 import { removeCredentials, setCredentials } from './authSlice';
 import { removeUser, setUser } from '../user/userSlice';
 
@@ -24,7 +24,7 @@ if (import.meta.env.DEV) {
 
 // Sign in user on firebase and return user info
 export const signInUser = async (email: string, password: string): Promise<{ info: UserType, idToken: string } | void> => {
-    await setPersistence(auth, { type: 'LOCAL' });
+    await setPersistence(auth, browserLocalPersistence);
     const user = await signInWithEmailAndPassword(auth, email, password)
         .then(userCredential => parseUserCredential(userCredential.user))
         .catch((error) => {

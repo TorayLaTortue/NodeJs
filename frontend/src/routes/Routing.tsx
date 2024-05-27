@@ -22,25 +22,26 @@ const Routing = () => (
     <Route path="/auth" element={<PublicRoute/>}>
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/register" element={<Register />} />
+      <Route path="/auth/*" element={<div>404 auth Not Found</div>} />
     </Route>
 
-    <Route path="/dashboard"  element={<PrivateRoute/>} >
-
+  <Route path="/dashboard"  element={<AdminRoute/>} >
       <Route path="/dashboard/admin" element={<RestrictedRoute roles={[Roles.admin]} />}>
         <Route path="/dashboard/admin/users" element={<Users />} />
         <Route path="/dashboard/admin/user" element={<User />}/>
         <Route path="/dashboard/admin/*" element={<div>404 Dashboard/admin Not Found</div>} />
         <Route path="/dashboard/admin" element={<Navigate to='/dashboard/profile'/>} />
       </Route>
-      
-      <Route path="/dashboard/profile" element={<Profile />}/>
-      <Route path="/dashboard/command" element={<Command />}/>
-      
-      <Route path="/dashboard/*" element={<div>404 Dashboard Not Found</div>} />
-      <Route path="/dashboard" element={<Navigate to='/dashboard/profile'/>} />
     </Route>
 
-    <Route path="*" element={<div>404 Global Not Found</div>} />
+    <Route path="/profil"  element={<ConnectedRoute/>} >
+      <Route path="/profil/user" element={<Profile />}/>
+      <Route path="/profil/settings" element={<Command />}/>
+      <Route path="/profil/*" element={<div>404 profil Not Found</div>} />
+      <Route path="/profil" element={<Navigate to='/profil/profile'/>} />
+      <Route path="*" element={<div>404 Global Not Found</div>} />
+    </Route>
+
   </Routes>
 );
 
@@ -59,10 +60,19 @@ const PublicRoute = () => {
     <PublicLayout>
       <Outlet/>
     </PublicLayout>
-  ) : <Navigate to='/'/>; //R'envoyer sur le dashboard si l'user est connecter
+  ) : <Navigate to='/'/>; //R'envoyer sur le home si l'user est connecter
 }
 
-const PrivateRoute = () => {
+const ConnectedRoute = () => {
+  const isAthenttificated = useAppSelector(selectIsAuthentificated);
+  return isAthenttificated ? (
+    <PublicLayout>
+      <Outlet/>
+    </PublicLayout>
+  ) : <Navigate to='/'/>; //R'envoyer sur le home si l'user est pas connecter
+}
+
+const AdminRoute = () => {
   const isAthenttificated = useAppSelector(selectIsAuthentificated);
   return isAthenttificated ? (
     <PrivateLayout>

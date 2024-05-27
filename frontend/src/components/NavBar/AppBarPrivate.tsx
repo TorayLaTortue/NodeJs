@@ -22,14 +22,16 @@ function ResponsiveAppBarHomePrivate() {
   let settings: { label: string; path: string | null; }[] = [];
 
    pages = [
-    { label: 'MainPage', path: '/dashboard/admin' },
+    { label: 'Home', path: '/' },
+    { label: 'Main Page', path: '/dashboard/admin' },
     { label: 'Settings', path: '/dashboard/settings' },
     { label: 'Search User', path: '/dashboard/admin/user' },
     { label: 'User List', path: '/dashboard/admin/users' },
   ];
   
    settings = [
-    { label: 'MainPage', path: '/dashboard/admin' },
+    { label: 'Home', path: '/' },
+    { label: 'Main Page', path: '/dashboard/admin' },
     { label: 'Settings', path: '/dashboard/settings' },
     { label: 'Search User', path: '/dashboard/admin/user' },
     { label: 'User List', path: '/dashboard/admin/users' },
