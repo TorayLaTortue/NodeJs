@@ -17,7 +17,7 @@ import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 import { logout } from '../Functions/Logout';
 import BadgeConnected from '../Badge/StyldeBadge';
 
-function ResponsiveAppBarHome() {
+function ResponsiveAppBar() {
   const userName = useAppSelector((state) => state.user.info?.displayName);
   const photoURL = useAppSelector((state) => state.user.info?.photoURL);
   const role = useAppSelector((state) => state.user.info?.role);
@@ -217,4 +217,4 @@ function ResponsiveAppBarHome() {
   );
 }
 
-export default ResponsiveAppBarHome;
+export default ResponsiveAppBar;

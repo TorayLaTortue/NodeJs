@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from "react";
-import ResponsiveAppBarHome from "../NavBar/AppBarHome";
+import ResponsiveAppBar from "../NavBar/AppBar";
 
 export const PublicLayout = (props: PropsWithChildren) => {
   return (
     <div style={{ background: 'black' }} className="public-layout">
-        <ResponsiveAppBarHome />
+        <ResponsiveAppBar />
         {props.children}
     </div>
   );
