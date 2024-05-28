@@ -13,36 +13,41 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/app/store';
-import { removeUser } from '@/features/user/userSlice';
-import { selectUserInfo } from '@/features/user/userSelectors';
+import { selectIsAuthentificated } from '@/features/auth/authSelectors';
+import { logout } from '../Functions/Logout';
 
-function ResponsiveAppBarHomePrivate() {
-  const userInfo= useAppSelector(selectUserInfo);
+function ResponsiveAppBarHome() {
+  const userName = useAppSelector((state) => state.user.info?.displayName);
+  const photoURL = useAppSelector((state) => state.user.info?.photoURL);
+  const role = useAppSelector((state) => state.user.info?.role);
+  const isAuth = useAppSelector(selectIsAuthentificated);
+  
   let pages: { label: string; path: string | null; }[] = [];
   let settings: { label: string; path: string | null; }[] = [];
 
-   pages = [
+  pages = [
     { label: 'Home', path: '/' },
-    { label: 'Main Page', path: '/dashboard/admin' },
-    { label: 'Settings', path: '/dashboard/settings' },
-    { label: 'Search User', path: '/dashboard/admin/user' },
-    { label: 'User List', path: '/dashboard/admin/users' },
+    { label: 'Profile', path: '/profil/user' },
   ];
   
-   settings = [
-    { label: 'Home', path: '/' },
-    { label: 'Main Page', path: '/dashboard/admin' },
-    { label: 'Settings', path: '/dashboard/settings' },
-    { label: 'Search User', path: '/dashboard/admin/user' },
-    { label: 'User List', path: '/dashboard/admin/users' },
+  settings = [
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Profile', path: '/profil/user' },
   ];
+  
+  if (role === 'admin') {
+    pages.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
+    settings.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
+  }
+
+  if (isAuth) {
+    settings.push({ label: 'Logout', path: null });
+  } else {
+    pages.push({ label: 'Login', path: '/auth/login' });
+    settings.push({ label: 'Login', path: '/auth/login' });
+  }
 
   const dispatch = useAppDispatch();
-
-  const logout = () => {
-    dispatch(removeUser());
-  };
-
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -62,11 +67,16 @@ function ResponsiveAppBarHomePrivate() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    handleCloseUserMenu();
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <Avatar src={'https://cdn.discordapp.com/attachments/831571160114266112/1229513804380114954/image.png?ex=665041b6&is=664ef036&hm=9f942d634ca4b767e732f298f4bfd0e44992388cedfb9d7c6b402b8bd6052535&'} /> {/* Logo */}
+          <Avatar src={'https://cdn.discordapp.com/attachments/831571160114266112/1229513804380114954/image.png?ex=665041b6&is=664ef036&hm=9f942d634ca4b767e732f298f4bfd0e44992388cedfb9d7c6b402b8bd6052535&'} /> {/* Logo */}
           <Typography
             variant="h6"
             noWrap
@@ -117,7 +127,7 @@ function ResponsiveAppBarHomePrivate() {
               {pages.map((page) => (
                 <MenuItem 
                   key={page.label} 
-                  onClick={page.path ? handleCloseNavMenu : logout}
+                  onClick={handleCloseNavMenu}
                 >
                   <Typography textAlign="center">
                     {page.path ? (
@@ -156,7 +166,7 @@ function ResponsiveAppBarHomePrivate() {
                 key={page.label}
                 component={page.path ? Link : 'button'}
                 to={page.path ? page.path : undefined}
-                onClick={page.path ? handleCloseNavMenu : logout}
+                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.label}
@@ -167,7 +177,7 @@ function ResponsiveAppBarHomePrivate() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={userInfo?.displayName} src={userInfo?.photoURL} />
+                <Avatar alt={userName} src={photoURL} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -189,7 +199,7 @@ function ResponsiveAppBarHomePrivate() {
               {settings.map((setting) => (
                 <MenuItem 
                   key={setting.label} 
-                  onClick={setting.path ? handleCloseUserMenu : logout}
+                  onClick={setting.path ? handleCloseUserMenu : handleLogout}
                 >
                   <Typography textAlign="center">
                     {setting.path ? (
@@ -210,4 +220,4 @@ function ResponsiveAppBarHomePrivate() {
   );
 }
 
-export default ResponsiveAppBarHomePrivate;
+export default ResponsiveAppBarHome;

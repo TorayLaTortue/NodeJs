@@ -30,6 +30,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      console.log('setUser', action);
       state.info = action.payload.user;
       localStorage.setItem('userState', JSON.stringify(action.payload.user));
     },

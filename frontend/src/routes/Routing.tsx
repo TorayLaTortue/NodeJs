@@ -5,7 +5,7 @@ import Home from '@/pages/Home/Home';
 import Users from '@/pages/Users/Users';
 import { useAppSelector } from '@/app/store';
 import { selectUserInfo } from '@/features/user/userSelectors';
-import Profile from '@/pages/Profile/Profile';
+import Profile from '@/pages/Profil/Profil';
 import Command from '@/pages/Command/Command';
 import { PrivateLayout } from '@/components/Layout/PrivateLayout';
 import { Roles } from '@/features/user/userType';
@@ -36,7 +36,6 @@ const Routing = () => (
 
     <Route path="/profil"  element={<ConnectedRoute/>} >
       <Route path="/profil/user" element={<Profile />}/>
-      <Route path="/profil/settings" element={<Command />}/>
       <Route path="/profil/*" element={<div>404 profil Not Found</div>} />
       <Route path="/profil" element={<Navigate to='/profil/profile'/>} />
       <Route path="*" element={<div>404 Global Not Found</div>} />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { setUser } from '@/features/user/userSlice';
-import UserList from '@/routes/UserList';
+import UserList from '@/services/UserList';
 import { useAppDispatch } from '@/app/store';
 import { signInUser } from '@/features/auth/authServices';
 import { setCredentials } from '@/features/auth/authSlice';

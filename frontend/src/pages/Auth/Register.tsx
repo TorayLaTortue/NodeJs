@@ -1,4 +1,4 @@
-import UserList from '@/routes/UserList';
+import UserList from '@/services/UserList';
 import React from 'react';
 
 const Register = () => {

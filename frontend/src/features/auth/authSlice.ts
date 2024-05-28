@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import reducers from '@/features/auth/authReducers';
 
-type AuthStateType = {
+export type AuthStateType = {
   idToken: string | null;
 }
 
@@ -21,18 +22,8 @@ const initialState: AuthStateType = loadAuthStateFromLocalStorage() || {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    setCredentials: (state, action) => {
-      state.idToken = action.payload.idToken;
-      localStorage.setItem('authState',  JSON.stringify(action.payload));
-    },
-    removeCredentials: (state) => {
-      state.idToken = null;
-      localStorage.removeItem('authState');
-    },
-  },
+  reducers,
 });
 
 export const { setCredentials, removeCredentials } = authSlice.actions;
-
 export default authSlice.reducer;

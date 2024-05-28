@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchUser from '@/routes/SearchUser';
+import SearchUser from '@/services/SearchUser';
 
 const User = () => {
 

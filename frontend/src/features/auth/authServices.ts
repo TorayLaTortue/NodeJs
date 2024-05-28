@@ -2,8 +2,8 @@ import store from '@/app/store';
 import { Roles, UserType } from '@/features/user/userType';
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, setPersistence, onAuthStateChanged, User, browserLocalPersistence } from 'firebase/auth';
-import { removeCredentials, setCredentials } from './authSlice';
-import { removeUser, setUser } from '../user/userSlice';
+import { removeCredentials, setCredentials } from '@/features/auth/authSlice';
+import { removeUser, setUser } from '@/features/user/userSlice';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY, 
@@ -40,6 +40,8 @@ const parseUserCredential = async (user: User | null): Promise<{ info: UserType,
     if (!user) return;
     const idToken = await user.getIdTokenResult(true);
 
+    // console.log('2', idToken, user);
+
     return ({
         info: {
             displayName: user.displayName ?? 'Anonymous',
@@ -48,7 +50,7 @@ const parseUserCredential = async (user: User | null): Promise<{ info: UserType,
             role: idToken.claims.role as Roles ?? 'user',
             photoURL: user.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
         },
-        idToken: idToken.token
+        idToken: idToken.token,
     });
 }
 
@@ -58,6 +60,7 @@ onAuthStateChanged(auth, async (user) => {
       // https://firebase.google.com/docs/reference/js/auth.user
       const connectedUser = await parseUserCredential(user);
       if (connectedUser) {
+        // console.log('1', connectedUser.idToken, connectedUser.info);
         store.dispatch(setCredentials({
             idToken: connectedUser.idToken
         }));

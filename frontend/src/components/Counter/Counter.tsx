@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 
 const Counter = () => {
   const dispatch = useAppDispatch();
-  const count = useAppSelector((state) => state.counter.count);
+  const count =  useAppSelector((state) => state.counter.count);
 
   return (
     <Stack

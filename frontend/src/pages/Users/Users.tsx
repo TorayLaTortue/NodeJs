@@ -1,5 +1,5 @@
 import React from 'react';
-import UserList from '@/routes/UserList';
+import UserList from '@/services/UserList';
 
 const Users = () => {
 
