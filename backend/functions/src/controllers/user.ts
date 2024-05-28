@@ -200,6 +200,42 @@ export const patch = async (req: Request, res: Response) => {
   }
 }
 
+export const UpdateUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { displayName, email, photoURL } = req.body;
+
+    if (!id || !displayName || !email || !photoURL) {
+      res.status(400).send({ message: "Missing fields" });
+      return res;
+    }
+
+    // Update user in Firebase
+    await admin.auth().updateUser(id, { displayName, email, photoURL });
+    const firebaseUser = await admin.auth().getUser(id);
+
+    // Update user in MongoDB
+    const updatedUser = await User.findOneAndUpdate(
+      { displayName, email, photoURL },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).send({ message: "User not found in MongoDB" });
+    }
+
+    let message = "User updated successfully in MongoDB";
+    if (firebaseUser) {
+      message += " and Firebase";
+    }
+
+    return res.status(200).send({ message, user: mapUser(firebaseUser) });
+  } catch (err) {
+    handleError(res, err);
+    return res;
+  }
+}
+
 export const patchMdp = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

@@ -13,10 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/app/store';
-import { removeUser } from '@/features/user/userSlice';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import { removeCredentials } from '@/features/auth/authSlice';
 import { logout } from '../Functions/Logout';
+import BadgeConnected from '../Badge/StyldeBadge';
 
 function ResponsiveAppBarHome() {
   const userName = useAppSelector((state) => state.user.info?.displayName);
@@ -28,12 +27,9 @@ function ResponsiveAppBarHome() {
 
   pages = [
     { label: 'Home', path: '/' },
-    { label: 'Profile', path: '/profil/user' },
   ];
   
   settings = [
-    { label: 'Dashboard', path: '/dashboard' },
-    { label: 'Profile', path: '/profil/user' },
   ];
   
   if (role === 'admin') {
@@ -41,6 +37,10 @@ function ResponsiveAppBarHome() {
     settings.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
   }
   if (isAuth) {
+    pages.push({ label: 'Profile', path: '/profil/user' });
+    settings.push({ label: 'Dashboard', path: '/dashboard' });
+    settings.push({ label: 'Profile', path: '/profil/user' });
+    settings.push({ label: 'Settings', path: '/profil/settings' });
     settings.push({ label: 'Logout', path: null });
   } else {
     pages.push({ label: 'Login', path: '/auth/login' });
@@ -172,7 +172,9 @@ function ResponsiveAppBarHome() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <BadgeConnected>
                 <Avatar alt={userName} src={photoURL} />
+                </BadgeConnected>
               </IconButton>
             </Tooltip>
             <Menu

@@ -1,7 +1,6 @@
 import React from 'react';
-import Authorized from '@/services/Login';
-import UserList from '@/services/UserList';
 import { Link } from 'react-router-dom';
+import Authorized from '@/services/Login';
 
 const Login = () => {
 

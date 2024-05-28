@@ -37,11 +37,17 @@ export const userRoutes = (app: Application) => {
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
     userCtrl.get
   ]);
-
+  
   // updates :id user
-  userRouter.put("/:id", [
+  userRouter.put("/admin/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
     userCtrl.patch
+  ]);
+
+  // updates :id user (only name photo and email)
+  userRouter.put("/:id", [
+    isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
+    userCtrl.UpdateUser
   ]);
 
   // updates Mdp :id user

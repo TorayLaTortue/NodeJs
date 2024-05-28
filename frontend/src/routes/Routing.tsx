@@ -13,6 +13,7 @@ import { PublicLayout } from '@/components/Layout/PublicLayout';
 import HomeLayout from '@/components/Layout/HomeLayout';
 import User from '@/pages/Users/User';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
+import Settings from '@/services/UpdateUser';
 
 const Routing = () => (
   <Routes>
@@ -36,6 +37,7 @@ const Routing = () => (
 
     <Route path="/profil"  element={<ConnectedRoute/>} >
       <Route path="/profil/user" element={<Profile />}/>
+      <Route path="/profil/settings" element={<Settings />}/>
       <Route path="/profil/*" element={<div>404 profil Not Found</div>} />
       <Route path="/profil" element={<Navigate to='/profil/profile'/>} />
       <Route path="*" element={<div>404 Global Not Found</div>} />
