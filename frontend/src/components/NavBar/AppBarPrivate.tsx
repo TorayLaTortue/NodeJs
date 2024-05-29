@@ -14,9 +14,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/app/store';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import { logout } from '../Functions/Logout';
+// import { logout } from '../Functions/Logout';
 
-function ResponsiveAppBar() {
+function ResponsiveAppBarPrivate() {
   const userName = useAppSelector((state) => state.user.info?.displayName);
   const photoURL = useAppSelector((state) => state.user.info?.photoURL);
   const role = useAppSelector((state) => state.user.info?.role);
@@ -68,7 +68,7 @@ function ResponsiveAppBar() {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    // dispatch(logout());
     handleCloseUserMenu();
   };
 
@@ -220,4 +220,4 @@ function ResponsiveAppBar() {
   );
 }
 
-export default ResponsiveAppBar;
+export default ResponsiveAppBarPrivate;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { setUser } from '@/features/user/userSlice';
-import UserList from '@/services/UserList';
-import { useAppDispatch } from '@/app/store';
+// import { setUser } from '@/features/user/userSlice';
+import UserList from '@/controllers/UserListControllers';
+// import { useAppDispatch } from '@/app/store';
 import { signInUser } from '@/features/auth/authServices';
-import { setCredentials } from '@/features/auth/authSlice';
+// import { setCredentials } from '@/features/auth/authSlice';
 
 const Authorized = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,12 +19,10 @@ const Authorized = () => {
         throw new Error('User not find');
       }
 
-      dispatch(setUser({ user: user.info }));
-      dispatch(setCredentials({ idToken: user.idToken }));
+      // dispatch(setUser({ user: user.info }));
+      // dispatch(setCredentials({ idToken: user.idToken }));
       console.log("data id token", user.idToken);
       console.log("user info", user.info);
-      UserList;
-      
     } catch (error) {
       console.error('Error signing in:', error);
     }

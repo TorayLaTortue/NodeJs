@@ -13,12 +13,15 @@ import { PublicLayout } from '@/components/Layout/PublicLayout';
 import HomeLayout from '@/components/Layout/HomeLayout';
 import User from '@/pages/Users/User';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import Settings from '@/services/UpdateUser';
+import Settings from '@/controllers/UpdateUserControllers';
+import HubAdmin from '@/pages/Admin/hubAdmin';
+import { signOutUser } from '@/features/auth/authServices';
 
 const Routing = () => (
   <Routes>
     
     <Route path="/" element={<HomeRoute />} />
+    <Route path="/logout" Component={() => { signOutUser(); return <Navigate to="/" /> }} />
 
     <Route path="/auth" element={<PublicRoute/>}>
       <Route path="/auth/login" element={<Login />} />
@@ -26,8 +29,10 @@ const Routing = () => (
       <Route path="/auth/*" element={<div>404 auth Not Found</div>} />
     </Route>
 
+
   <Route path="/dashboard"  element={<AdminRoute/>} >
       <Route path="/dashboard/admin" element={<RestrictedRoute roles={[Roles.admin]} />}>
+      <Route path="/dashboard/admin/hub" element={<HubAdmin />} />
         <Route path="/dashboard/admin/users" element={<Users />} />
         <Route path="/dashboard/admin/user" element={<User />}/>
         <Route path="/dashboard/admin/*" element={<div>404 Dashboard/admin Not Found</div>} />

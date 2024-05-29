@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchUser from '@/services/SearchUser';
+import SearchUser from '@/controllers/SearchUserControllers';
 
 const User = () => {
 

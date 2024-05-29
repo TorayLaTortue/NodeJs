@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,51 +11,52 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '@/app/store';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@/app/store';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import { logout } from '../Functions/Logout';
 import BadgeConnected from '../Badge/StyldeBadge';
+import { Roles } from '@/features/user/userType';
+
+enum Pages {
+  Home = 'Home',
+  Profile = 'Profile',
+  Settings = 'Settings',
+  Logout = 'Logout',
+  Login = 'Login',
+  DashboardAdmin = 'Dashboard Admin',
+  DashboardUser = 'Dashboard User',
+}
+
+type MenuType = {
+  label: Pages;
+  path: string;
+};
+
+/* const pages: MenuType[] = [
+  { label: Pages.Home, path: '/' },
+];
+const settings: MenuType[] = []; */
 
 function ResponsiveAppBar() {
   const userName = useAppSelector((state) => state.user.info?.displayName);
   const photoURL = useAppSelector((state) => state.user.info?.photoURL);
   const role = useAppSelector((state) => state.user.info?.role);
   const isAuth = useAppSelector(selectIsAuthentificated);
-  let pages: { label: string; path: string | null; }[] = [];
-  let settings: { label: string; path: string | null; }[] = [];
+  const navigate = useNavigate();
 
-  pages = [
-    { label: 'Home', path: '/' },
-  ];
-  
-  settings = [
-  ];
-  
-  if (role === 'admin') {
-    pages.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
-    settings.push({ label: 'Dashboard Admin', path: '/dashboard/admin' });
-  }
-  if (isAuth) {
-    pages.push({ label: 'Profile', path: '/profil/user' });
-    settings.push({ label: 'Dashboard', path: '/dashboard' });
-    settings.push({ label: 'Profile', path: '/profil/user' });
-    settings.push({ label: 'Settings', path: '/profil/settings' });
-    settings.push({ label: 'Logout', path: null });
-  } else {
-    pages.push({ label: 'Login', path: '/auth/login' });
-    settings.push({ label: 'Login', path: '/auth/login' });
-  }
+  // Menu items states
+  const [pagesMenuItems, setPagesMenuItems] = useState<MenuType[]>([{ label: Pages.Home, path: '/' }]);
+  const [settingsMenuItems, setSettingsMenuItems] = useState<MenuType[]>([]);
 
-  const dispatch = useAppDispatch();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  // Menu state
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -66,6 +67,38 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleNavigate = (page: MenuType) => {
+    handleCloseNavMenu();
+    navigate(page.path);
+  }
+  
+  useEffect(() => {
+    if (isAuth) {
+      setSettingsMenuItems([
+        { label: Pages.Profile, path: '/profil/user' },
+        { label: Pages.Settings, path: '/profil/settings' },
+        { label: Pages.Logout, path: '/logout' }
+      ]),
+      setPagesMenuItems([
+        { label: Pages.Home, path: '/' },
+      ]);
+      setPagesMenuItems([
+          ...(role === Roles.admin) ? [
+            { label: Pages.DashboardAdmin, path: '/dashboard/admin/hub' }
+          ] : [
+            // empty...
+          ]
+        ])
+    } else {
+      setPagesMenuItems([
+        { label: Pages.Home, path: '/' },
+      ]);
+      setSettingsMenuItems([
+        { label: Pages.Login, path: '/auth/login' }
+      ]);
+    }
+  }, [isAuth]);
 
   return (
     <AppBar position="static">
@@ -119,24 +152,17 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {pagesMenuItems.map((page) => (
                 <MenuItem 
                   key={page.label} 
-                  onClick={page.path ? handleCloseNavMenu : () => dispatch(logout())}
+                  onClick={() => handleNavigate(page)}
                 >
-                  <Typography textAlign="center">
-                    {page.path ? (
-                      <Link to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        {page.label}
-                      </Link>
-                    ) : (
-                      page.label
-                    )}
-                  </Typography>
+                  <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+
           <Typography
             variant="h5"
             noWrap
@@ -155,13 +181,12 @@ function ResponsiveAppBar() {
           >
             Toray
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pagesMenuItems.map((page, id) => (
               <Button
-                key={page.label}
-                component={page.path ? Link : 'button'}
-                to={page.path ? page.path : undefined}
-                onClick={page.path ? handleCloseNavMenu : () => dispatch(logout())}
+                key={id}
+                onClick={() => handleNavigate(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.label}
@@ -170,6 +195,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <BadgeConnected>
@@ -177,6 +203,7 @@ function ResponsiveAppBar() {
                 </BadgeConnected>
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -193,26 +220,22 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {settingsMenuItems.map((setting) => (
                 <MenuItem 
                   key={setting.label} 
-                  onClick={setting.path ? handleCloseUserMenu : () => dispatch(logout())}
-                >
-                  <Typography textAlign="center">
-                    {setting.path ? (
-                      <Link to={setting.path} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        {setting.label}
-                      </Link>
-                    ) : (
-                      setting.label
-                    )}
-                  </Typography>
+                  onClick={() => handleNavigate(setting)}
+                  >
+                  <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
+
           </Box>
+
         </Toolbar>
+
       </Container>
+
     </AppBar>
   );
 }

@@ -1,4 +1,4 @@
-import UserList from '@/services/UserList';
+import UserList from '@/controllers/UserListControllers';
 import React from 'react';
 
 const Register = () => {

@@ -28,11 +28,15 @@ export const signInUser = async (email: string, password: string): Promise<{ inf
     const user = await signInWithEmailAndPassword(auth, email, password)
         .then(userCredential => parseUserCredential(userCredential.user))
         .catch((error) => {
-            const errorCode = error.code;
+            // const errorCode = error.code;
             const errorMessage = error.message;
-            console.error(errorCode, errorMessage);
+            throw new Error(errorMessage);
         });
     return user;
+};
+
+export const signOutUser = async () => {
+    await auth.signOut();
 }
 
 // parse user from firebase to app user
@@ -40,7 +44,7 @@ const parseUserCredential = async (user: User | null): Promise<{ info: UserType,
     if (!user) return;
     const idToken = await user.getIdTokenResult(true);
 
-    // console.log('2', idToken, user);
+    console.log('2', idToken, user);
 
     return ({
         info: {

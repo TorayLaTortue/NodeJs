@@ -1,5 +1,5 @@
 import React from 'react';
-import UserList from '@/services/UserList';
+import UserList from '@/controllers/UserListControllers';
 
 const Users = () => {
 

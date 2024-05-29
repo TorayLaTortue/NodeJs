@@ -1,6 +1,6 @@
 import React from 'react';
 import Background from '@/components/Layout/Background';
-import ProfilInfo from '../../services/Profil';
+import ProfilInfo from '../../controllers/ProfilControllers';
 
 const Profile = () => {
   
