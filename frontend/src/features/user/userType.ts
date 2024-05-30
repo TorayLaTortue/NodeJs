@@ -12,3 +12,12 @@ export type UserType = {
     uid: string;
     // All others field
 };
+
+export const nullUserType: UserType = {
+    displayName: '',
+    email: '',
+    role: Roles.user,
+    photoURL: '',
+    uid: ''
+    // All others field
+};

@@ -38,9 +38,9 @@ type MenuType = {
 const settings: MenuType[] = []; */
 
 function ResponsiveAppBar() {
-  const userName = useAppSelector((state) => state.user.info?.displayName);
-  const photoURL = useAppSelector((state) => state.user.info?.photoURL);
-  const role = useAppSelector((state) => state.user.info?.role);
+  const { role, displayName, photoURL } = useAppSelector((state) => state.user.info);
+  console.log(displayName, photoURL,role);
+
   const isAuth = useAppSelector(selectIsAuthentificated);
   const navigate = useNavigate();
 
@@ -199,7 +199,7 @@ function ResponsiveAppBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <BadgeConnected>
-                <Avatar alt={userName} src={photoURL} />
+                <Avatar alt={displayName} src={photoURL} />
                 </BadgeConnected>
               </IconButton>
             </Tooltip>

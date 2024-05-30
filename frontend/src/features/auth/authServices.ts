@@ -51,8 +51,8 @@ const parseUserCredential = async (user: User | null): Promise<{ info: UserType,
             displayName: user.displayName ?? 'Anonymous',
             email: user.email ?? 'unknown@unknown.com',
             uid: user.uid ?? '00000',
-            role: idToken.claims.role as Roles ?? 'user',
-            photoURL: user.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
+            role: idToken.claims.role as Roles ?? Roles.user,
+            photoURL: user.photoURL ?? ''
         },
         idToken: idToken.token,
     });
@@ -65,11 +65,13 @@ onAuthStateChanged(auth, async (user) => {
       const connectedUser = await parseUserCredential(user);
       if (connectedUser) {
         // console.log('1', connectedUser.idToken, connectedUser.info);
+        
         store.dispatch(setCredentials({
             idToken: connectedUser.idToken
         }));
         store.dispatch(setUser({
-            info: connectedUser.info
+            info: connectedUser.info,
+            mode: 'light'
         }));
       }
       // ...

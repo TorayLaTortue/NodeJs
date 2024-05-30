@@ -18,7 +18,6 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
   const result = await baseQuery(args, api, extraOptions);
   // === 401 Unauthorized === //
-  // TODO: Refresh token operations
 
   return result;
 };

@@ -44,7 +44,7 @@ export const userRoutes = (app: Application) => {
     userCtrl.patch
   ]);
 
-  // updates :id user (only name photo and email)
+  // updates :id user (only name, photo and email)
   userRouter.put("/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
     userCtrl.UpdateUser
