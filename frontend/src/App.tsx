@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 
 
 const App = () => {
+  console.log('APP');
   return (
     <BrowserRouter>
       <Provider store={store}>

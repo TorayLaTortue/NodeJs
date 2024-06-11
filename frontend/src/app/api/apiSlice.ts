@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
+import { UserType } from '@/features/user/userType';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL,
@@ -24,5 +25,11 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  endpoints: () => ({}),
-});
+  endpoints: (build) => ({
+    getUserById: build.query<UserType, string>({
+      query: (id) => `user/${id}`,
+    }),
+  }),
+})
+
+export const { useGetUserByIdQuery } = apiSlice

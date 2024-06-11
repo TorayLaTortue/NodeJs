@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 
 const ProfilInfo: React.FC = () => {
   const idToken = useAppSelector(selectAuthIdToken);
-  const uid = useAppSelector((state) => state.user.info?.uid);
+  const uid = useAppSelector((state) => state.user.data?.uid);
   const [userInfo, setUserInfo] = useState<UserType | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ const ProfilInfo: React.FC = () => {
         throw new Error('Network response was not ok');
       }
       const responseData = await response.json();
-      if (!responseData || !responseData.user) {
+      if (!responseData || !responseData.user) { 
         throw new Error('Invalid response data');
       }
       setUserInfo(responseData.user);

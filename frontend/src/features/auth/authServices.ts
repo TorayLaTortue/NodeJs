@@ -3,7 +3,7 @@ import { Roles, UserType } from '@/features/user/userType';
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, setPersistence, onAuthStateChanged, User, browserLocalPersistence } from 'firebase/auth';
 import { removeCredentials, setCredentials } from '@/features/auth/authSlice';
-import { removeUser, setUser } from '@/features/user/userSlice';
+import { userActions } from '@/features/user/userSlice';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY, 
@@ -69,14 +69,14 @@ onAuthStateChanged(auth, async (user) => {
         store.dispatch(setCredentials({
             idToken: connectedUser.idToken
         }));
-        store.dispatch(setUser({
-            info: connectedUser.info,
+        store.dispatch(userActions.setUser(connectedUser.info/* {
+            data: connectedUser.info,
             mode: 'light'
-        }));
+        } */));
       }
       // ...
     } else {
         store.dispatch(removeCredentials());
-        store.dispatch(removeUser());
+        store.dispatch(userActions.resetUser());
     }
   });

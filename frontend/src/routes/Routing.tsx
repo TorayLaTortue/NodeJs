@@ -4,9 +4,8 @@ import Login from '@/pages/Auth/Login';
 import Home from '@/pages/Home/Home';
 import Users from '@/pages/Users/Users';
 import { useAppSelector } from '@/app/store';
-import { selectUserInfo } from '@/features/user/userSelectors';
+import { userSelectors } from '@/features/user/userSlice';
 import Profile from '@/pages/Profil/Profil';
-import Command from '@/pages/Command/Command';
 import { PrivateLayout } from '@/components/Layout/PrivateLayout';
 import { Roles } from '@/features/user/userType';
 import { PublicLayout } from '@/components/Layout/PublicLayout';
@@ -89,7 +88,7 @@ const AdminRoute = () => {
 
 const RestrictedRoute = (props: { roles: Roles[] }) => {
   const isAthenttificated = useAppSelector(selectIsAuthentificated);
-  const user = useAppSelector(selectUserInfo);
+  const user = useAppSelector(userSelectors.selectUserInfo);
 
   return isAthenttificated && user && props.roles.includes(user.role) ? <Outlet/> : <div>Access denied</div>;
 }

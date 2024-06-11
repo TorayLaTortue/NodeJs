@@ -38,7 +38,7 @@ type MenuType = {
 const settings: MenuType[] = []; */
 
 function ResponsiveAppBar() {
-  const { role, displayName, photoURL } = useAppSelector((state) => state.user.info);
+  const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
   console.log(displayName, photoURL,role);
 
   const isAuth = useAppSelector(selectIsAuthentificated);

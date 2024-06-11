@@ -1,11 +1,11 @@
 import React from 'react';
-import { changeMode } from '@/features/user/userSlice';
+// import { changeMode } from '@/features/user/userSlice';
 import { Stack, Box, Typography, IconButton, TypographyVariant, SxProps, Theme } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
-import { useAppDispatch, useAppSelector } from '@/app/store';
+// import { useAppDispatch, useAppSelector } from '@/app/store';
 const TemplateTester = () => {
-  const dispatch = useAppDispatch();
-  const mode = useAppSelector((state) => state.user.mode);
+  // const dispatch = useAppDispatch();
+  const mode = 'dark'; // useAppSelector((state) => state.user.mode);
 
   const colors = [
     {
@@ -96,7 +96,7 @@ const TemplateTester = () => {
       gap={2}
     >
       <Typography variant="h3">{type}</Typography> {func}
-      <IconButton onClick={() => dispatch(changeMode())} sx={{ position: 'absolute', top: 10, right: 10 }}>
+      <IconButton /* onClick={() => dispatch(changeMode())} */ sx={{ position: 'absolute', top: 10, right: 10 }}>
         <Brightness4Icon
           sx={{
             transition: 'transform 0.4s',

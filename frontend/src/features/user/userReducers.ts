@@ -1,27 +1,30 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { nullUserType, UserType } from "./userType";
-import { UserStateType } from "./userSlice";
+import { UserType } from "./userType";
 
-export type AUTH_SET_USER_ACTION_TYPE = {
+import { initialState, UserStateType } from "./userSlice";
+
+export type AUTH_SET_USER_ACTION_TYPE = UserType;
+/* {
     info: UserType;
     mode: 'light' | 'dark';
-}
+} */
 
 // Action to set user credential on store
 const setUser = (state: UserStateType, action: PayloadAction<AUTH_SET_USER_ACTION_TYPE>) => {
-    console.log('setUser', action);
-    state.info = action.payload.info;
+    state.data = action.payload;
     localStorage.setItem('userState', JSON.stringify(action.payload));
-    console.log(localStorage.getItem('userState'), "local storage");
+    // console.log(localStorage.getItem('userState'), "local storage");
 };
 
 // Action to remove user credential on store
-const removeUser = (state: UserStateType) => {
-    state.info = nullUserType;
+const resetUser = (state: UserStateType) => {
     localStorage.removeItem('userState');
+    state.data = initialState.data;
+    state.error = initialState.error;
+    state.status = initialState.status;
 };
 
-const changeMode = (state: UserStateType) => {
+/* const changeMode = (state: UserStateType) => {
     if (state.mode === 'light') {
       state.mode = 'dark';
       localStorage.setItem('mode', 'dark');
@@ -29,10 +32,10 @@ const changeMode = (state: UserStateType) => {
       state.mode = 'light';
       localStorage.setItem('mode', 'light');
     }
-}
+} */
 
 export default {
     setUser,
-    removeUser,
-    changeMode
+    resetUser
+    // changeMode
 };

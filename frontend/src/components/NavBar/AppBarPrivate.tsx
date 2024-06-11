@@ -17,9 +17,9 @@ import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 // import { logout } from '../Functions/Logout';
 
 function ResponsiveAppBarPrivate() {
-  const userName = useAppSelector((state) => state.user.info?.displayName);
-  const photoURL = useAppSelector((state) => state.user.info?.photoURL);
-  const role = useAppSelector((state) => state.user.info?.role);
+  const userName = useAppSelector((state) => state.user.data?.displayName);
+  const photoURL = useAppSelector((state) => state.user.data?.photoURL);
+  const role = useAppSelector((state) => state.user.data?.role);
   const isAuth = useAppSelector(selectIsAuthentificated);
   
   let pages: { label: string; path: string | null; }[] = [];
@@ -220,4 +220,3 @@ function ResponsiveAppBarPrivate() {
   );
 }
 
-export default ResponsiveAppBarPrivate;

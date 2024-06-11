@@ -5,7 +5,7 @@ import { UserType } from '@/features/user/userType';
 
 const UpdateUser = () => {
   const idToken = useAppSelector(selectAuthIdToken);
-  const uid = useAppSelector((state) => state.user.info?.uid);
+  const uid = useAppSelector((state) => state.user.data?.uid);
   const [displayName, setName] = useState("");
   const [email, setEmail] = useState("");
   const [photoURL, setPhotoURL] = useState("");
