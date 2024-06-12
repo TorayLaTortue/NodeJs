@@ -10,7 +10,6 @@ export type UserStateType = {
   status: RequestState;
   error: string;
   data: UserType;
-  // mode: 'light' | 'dark'; // @todo a mettre dans un slice "uiSlice" a part
 }
 
 const loadUserStateFromLocalStorage = () => {
@@ -28,11 +27,6 @@ export const initialState: UserStateType = {
   status: RequestState.idle,
   error: '',
   data: loadUserStateFromLocalStorage() || nullUserType,
-  /* mode: localStorage.getItem('mode') // @todo a mettre dans un slice "uiSlice" a part
-    ? localStorage.getItem('mode') as 'light' | 'dark'
-    : window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light', */
 };
 
 export const userSlice = createSlice({

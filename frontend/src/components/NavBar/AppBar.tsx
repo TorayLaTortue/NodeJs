@@ -32,14 +32,9 @@ type MenuType = {
   path: string;
 };
 
-/* const pages: MenuType[] = [
-  { label: Pages.Home, path: '/' },
-];
-const settings: MenuType[] = []; */
-
 function ResponsiveAppBar() {
   const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
-  console.log(displayName, photoURL,role);
+  console.log(displayName, photoURL, role);
 
   const isAuth = useAppSelector(selectIsAuthentificated);
   const navigate = useNavigate();
@@ -71,8 +66,12 @@ function ResponsiveAppBar() {
   const handleNavigate = (page: MenuType) => {
     handleCloseNavMenu();
     navigate(page.path);
-  }
-  
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     if (isAuth) {
       setSettingsMenuItems([
@@ -89,7 +88,7 @@ function ResponsiveAppBar() {
           ] : [
             // empty...
           ]
-        ])
+        ]);
     } else {
       setPagesMenuItems([
         { label: Pages.Home, path: '/' },
@@ -104,7 +103,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Avatar src={'https://cdn.discordapp.com/attachments/831571160114266112/1229513804380114954/image.png?ex=665041b6&is=664ef036&hm=9f942d634ca4b767e732f298f4bfd0e44992388cedfb9d7c6b402b8bd6052535&'} /> {/* Logo */}
+          <Avatar src={''} onClick={handleLogoClick} style={{ cursor: 'pointer' }} /> {/* Logo */}
           <Typography
             variant="h6"
             noWrap
@@ -195,11 +194,10 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <BadgeConnected>
-                <Avatar alt={displayName} src={photoURL} />
+                <BadgeConnected>
+                  <Avatar alt={displayName} src={photoURL} style={{ cursor: 'pointer' }} />
                 </BadgeConnected>
               </IconButton>
             </Tooltip>
@@ -224,18 +222,14 @@ function ResponsiveAppBar() {
                 <MenuItem 
                   key={setting.label} 
                   onClick={() => handleNavigate(setting)}
-                  >
+                >
                   <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
-
           </Box>
-
         </Toolbar>
-
       </Container>
-
     </AppBar>
   );
 }

@@ -3,15 +3,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userReducer from '@/features/user/userSlice';
 import authReducer from '@/features/auth/authSlice';
+import modeReducer from '@/features/ui/uiSlice';
 import { counterReducer } from '@/features/counterSlice';
 
 const store = configureStore({
   reducer: {
-    // [apiSlice.reducerPath]: apiSlice.reducer,
-    // Add your reducers here
     counter: counterReducer,
     auth: authReducer,
     user: userReducer,
+    mode: modeReducer,
   },
   devTools: import.meta.env.DEV,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
@@ -21,7 +21,6 @@ const store = configureStore({
       }
     }
   }).concat(
-    // apiSlice.middleware
   ),
 });
 

@@ -28,7 +28,6 @@ export const signInUser = async (email: string, password: string): Promise<{ inf
     const user = await signInWithEmailAndPassword(auth, email, password)
         .then(userCredential => parseUserCredential(userCredential.user))
         .catch((error) => {
-            // const errorCode = error.code;
             const errorMessage = error.message;
             throw new Error(errorMessage);
         });
@@ -63,18 +62,12 @@ onAuthStateChanged(auth, async (user) => {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
       const connectedUser = await parseUserCredential(user);
-      if (connectedUser) {
-        // console.log('1', connectedUser.idToken, connectedUser.info);
-        
+      if (connectedUser) {        
         store.dispatch(setCredentials({
             idToken: connectedUser.idToken
         }));
-        store.dispatch(userActions.setUser(connectedUser.info/* {
-            data: connectedUser.info,
-            mode: 'light'
-        } */));
+        store.dispatch(userActions.setUser(connectedUser.info));
       }
-      // ...
     } else {
         store.dispatch(removeCredentials());
         store.dispatch(userActions.resetUser());

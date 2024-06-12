@@ -9,7 +9,6 @@ import Profile from '@/pages/Profil/Profil';
 import { PrivateLayout } from '@/components/Layout/PrivateLayout';
 import { Roles } from '@/features/user/userType';
 import { PublicLayout } from '@/components/Layout/PublicLayout';
-import HomeLayout from '@/components/Layout/HomeLayout';
 import User from '@/pages/Users/User';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 import Settings from '@/controllers/UpdateUserControllers';
@@ -52,10 +51,10 @@ const Routing = () => (
 
 const HomeRoute = () => {
   return (
-    <HomeLayout>
+    <PublicLayout>
       <Outlet/>
       <Home/>
-    </HomeLayout>
+    </PublicLayout>
   )
 }
 
