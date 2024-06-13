@@ -7,8 +7,6 @@ const UserList: React.FC = () => {
   const [users, setUsers] = useState<UserType[]>([]);
   const idToken = useAppSelector(selectAuthIdToken);
 
-  console.log('idToken', idToken);
-
   useEffect(() => {
     fetchUsers();
   }, []);

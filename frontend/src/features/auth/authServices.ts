@@ -42,9 +42,6 @@ export const signOutUser = async () => {
 const parseUserCredential = async (user: User | null): Promise<{ info: UserType, idToken: string } | void> => {
     if (!user) return;
     const idToken = await user.getIdTokenResult(true);
-
-    console.log('2', idToken, user);
-
     return ({
         info: {
             displayName: user.displayName ?? 'Anonymous',

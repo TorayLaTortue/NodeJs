@@ -16,25 +16,11 @@ import { useAppSelector } from '@/app/store';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 import BadgeConnected from '../Badge/StyldeBadge';
 import { Roles } from '@/features/user/userType';
-
-enum Pages {
-  Home = 'Home',
-  Profile = 'Profile',
-  Settings = 'Settings',
-  Logout = 'Logout',
-  Login = 'Login',
-  DashboardAdmin = 'Dashboard Admin',
-  DashboardUser = 'Dashboard User',
-}
-
-type MenuType = {
-  label: Pages;
-  path: string;
-};
+import { Pages, MenuType } from '@/types/appTypes';
+import { RoutesType } from '@/types/routeTypes';
 
 function ResponsiveAppBar() {
   const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
-  console.log(displayName, photoURL, role);
 
   const isAuth = useAppSelector(selectIsAuthentificated);
   const navigate = useNavigate();
@@ -69,32 +55,32 @@ function ResponsiveAppBar() {
   };
 
   const handleLogoClick = () => {
-    navigate('/');
+    navigate(RoutesType.Home);
   };
 
   useEffect(() => {
     if (isAuth) {
       setSettingsMenuItems([
-        { label: Pages.Profile, path: '/profil/user' },
-        { label: Pages.Settings, path: '/profil/settings' },
-        { label: Pages.Logout, path: '/logout' }
+        { label: Pages.Profile, path: RoutesType.ProfilUser },
+        { label: Pages.Settings, path: RoutesType.ProfilSettings },
+        { label: Pages.Logout, path: RoutesType.Logout }
       ]),
       setPagesMenuItems([
-        { label: Pages.Home, path: '/' },
+       // { label: Pages.Home, path: Routes.Login }, Kinda useless
       ]);
       setPagesMenuItems([
           ...(role === Roles.admin) ? [
-            { label: Pages.DashboardAdmin, path: '/dashboard/admin/hub' }
+            { label: Pages.DashboardAdmin, path: RoutesType.DashboardAdminHub }
           ] : [
             // empty...
           ]
         ]);
     } else {
       setPagesMenuItems([
-        { label: Pages.Home, path: '/' },
+        { label: Pages.Login, path: RoutesType.Login },
       ]);
       setSettingsMenuItems([
-        { label: Pages.Login, path: '/auth/login' }
+        { label: Pages.Login, path: RoutesType.Login }
       ]);
     }
   }, [isAuth]);
@@ -119,7 +105,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Toray
+            {/*Titre*/}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

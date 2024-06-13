@@ -7,7 +7,6 @@ export type AUTH_SET_CREDENTIAL_ACTION_TYPE = {
 
 // Action to set user credential on store
 const setCredentials = (state: AuthStateType, action: PayloadAction<AUTH_SET_CREDENTIAL_ACTION_TYPE>) => {
-    console.log('setCredentials', state, action.payload.idToken);
     state.idToken = action.payload.idToken;
     localStorage.setItem('authState',  JSON.stringify(action.payload));
 };

@@ -18,11 +18,6 @@ const Authorized = () => {
       if (!user) {
         throw new Error('User not find');
       }
-
-      // dispatch(setUser({ user: user.info }));
-      // dispatch(setCredentials({ idToken: user.idToken }));
-      console.log("data id token", user.idToken);
-      console.log("user info", user.info);
     } catch (error) {
       console.error('Error signing in:', error);
     }

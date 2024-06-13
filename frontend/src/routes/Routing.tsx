@@ -11,42 +11,41 @@ import { Roles } from '@/features/user/userType';
 import { PublicLayout } from '@/components/Layout/PublicLayout';
 import User from '@/pages/Users/User';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import Settings from '@/controllers/UpdateUserControllers';
+import Settings from '@/pages/Profil/Settings';
 import HubAdmin from '@/pages/Admin/hubAdmin';
 import { signOutUser } from '@/features/auth/authServices';
+import { RoutesType } from '@/types/routeTypes';
 
 const Routing = () => (
   <Routes>
     
     <Route path="/" element={<HomeRoute />} />
-    <Route path="/logout" Component={() => { signOutUser(); return <Navigate to="/" /> }} />
+    <Route path="/logout" Component={() => {  signOutUser(); return <Navigate to={RoutesType.Home} /> }} />
 
-    <Route path="/auth" element={<PublicRoute/>}>
-      <Route path="/auth/login" element={<Login />} />
-      <Route path="/auth/register" element={<Register />} />
-      <Route path="/auth/*" element={<div>404 auth Not Found</div>} />
-    </Route>
-
-
-  <Route path="/dashboard"  element={<AdminRoute/>} >
-      <Route path="/dashboard/admin" element={<RestrictedRoute roles={[Roles.admin]} />}>
-      <Route path="/dashboard/admin/hub" element={<HubAdmin />} />
-        <Route path="/dashboard/admin/users" element={<Users />} />
-        <Route path="/dashboard/admin/user" element={<User />}/>
-        <Route path="/dashboard/admin/*" element={<div>404 Dashboard/admin Not Found</div>} />
-        <Route path="/dashboard/admin" element={<Navigate to='/dashboard/profile'/>} />
+    <Route path="/auth" element={<PublicRoute />}>
+        <Route path={RoutesType.Login} element={<Login />} />
+        <Route path={RoutesType.Register} element={<Register />} />
+        <Route path={RoutesType.AuthNotFound} element={<div>404 auth Not Found</div>} />
       </Route>
-    </Route>
 
-    <Route path="/profil"  element={<ConnectedRoute/>} >
-      <Route path="/profil/user" element={<Profile />}/>
-      <Route path="/profil/settings" element={<Settings />}/>
-      <Route path="/profil/*" element={<div>404 profil Not Found</div>} />
-      <Route path="/profil" element={<Navigate to='/profil/profile'/>} />
-      <Route path="*" element={<div>404 Global Not Found</div>} />
-    </Route>
+      <Route path="/dashboard" element={<AdminRoute />}>
+        <Route path="/dashboard/admin" element={<RestrictedRoute roles={[Roles.admin]} />}>
+          <Route path={RoutesType.DashboardAdminHub} element={<HubAdmin />} />
+          <Route path={RoutesType.DashboardAdminUsers} element={<Users />} />
+          <Route path={RoutesType.DashboardAdminUser} element={<User />} />
+          <Route path={RoutesType.DashboardAdminNotFound} element={<div>404 Dashboard/admin Not Found</div>} />
+          <Route path={RoutesType.DashboardAdminRedirect} element={<Navigate to={RoutesType.ProfilRedirect} />} />
+        </Route>
+      </Route>
 
-  </Routes>
+      <Route path="/profil" element={<ConnectedRoute />}>
+        <Route path={RoutesType.ProfilUser} element={<Profile />} />
+        <Route path={RoutesType.ProfilSettings} element={<Settings />} />
+        <Route path={RoutesType.ProfilNotFound} element={<div>404 profil Not Found</div>} />
+        <Route path={RoutesType.ProfilRedirect} element={<Navigate to={RoutesType.ProfilUser} />} />
+        <Route path={RoutesType.GlobalNotFound} element={<div>404 Global Not Found</div>} />
+      </Route>
+    </Routes>
 );
 
 const HomeRoute = () => {

@@ -162,7 +162,7 @@ export const get = async (req: Request, res: Response) => {
   }
 }
 
-export const patch = async (req: Request, res: Response) => {
+export const UpdateUserByAdmin = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { displayName, email, role, photoURL } = req.body;
@@ -206,7 +206,7 @@ export const UpdateUser = async (req: Request, res: Response) => {
     const { displayName, email, photoURL } = req.body;
 
     if (!id || !displayName || !email || !photoURL) {
-      res.status(400).send({ message: "Missing fields" });
+      res.status(400).send({ message: "Missing fields :", id, displayName, email, photoURL });
       return res;
     }
 
@@ -216,6 +216,7 @@ export const UpdateUser = async (req: Request, res: Response) => {
 
     // Update user in MongoDB
     const updatedUser = await User.findOneAndUpdate(
+      { uid: id },
       { displayName, email, photoURL },
       { new: true }
     );
@@ -236,7 +237,7 @@ export const UpdateUser = async (req: Request, res: Response) => {
   }
 }
 
-export const patchMdp = async (req: Request, res: Response) => {
+export const updatePassword = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { password } = req.body;

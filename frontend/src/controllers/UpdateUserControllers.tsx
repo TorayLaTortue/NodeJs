@@ -5,46 +5,16 @@ import { UserType } from '@/features/user/userType';
 
 const UpdateUser = () => {
   const idToken = useAppSelector(selectAuthIdToken);
-  const uid = useAppSelector((state) => state.user.data?.uid);
-  const [displayName, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [photoURL, setPhotoURL] = useState("");
+  const {uid, displayName, photoURL, email } = useAppSelector((state) => state.user.data);
+  const [name, setName] = useState(displayName);
+  const [mail, setEmail] = useState(email);
+  const [photo, setPhotoURL] = useState(photoURL);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (uid) {
-      fetchUser(uid);
-    }
-  }, [uid]);
-
-  const fetchUser = async (userId: string) => {
-    try {
-      const response = await fetch(`http://127.0.0.1:5001/serveurnodejs/us-central1/api/users/${userId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${idToken}`
-        }
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const responseData = await response.json();
-      if (!responseData || !responseData.user) {
-        throw new Error('Invalid response data');
-      }
-      setName(responseData.user.displayName);
-      setEmail(responseData.user.email);
-      setPhotoURL(responseData.user.photoURL);
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-      setError('Failed to fetch user data.');
-    }
-  };
-
   const updateUser = async (userId: string, displayName: string, email: string, photoURL: string) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5001/serveurnodejs/us-central1/api/users/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${idToken}`,
@@ -69,10 +39,12 @@ const UpdateUser = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    useEffect(() => {
+      e.preventDefault();
     if (uid) {
-      updateUser(uid, displayName, email, photoURL);
+      updateUser(uid, name, mail, photo);
     }
+    }, []);
   };
 
   return (

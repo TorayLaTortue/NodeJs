@@ -40,8 +40,8 @@ export const userRoutes = (app: Application) => {
   
   // updates :id user
   userRouter.put("/admin/:id", [
-    isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
-    userCtrl.patch
+    isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),
+    userCtrl.UpdateUserByAdmin
   ]);
 
   // updates :id user (only name, photo and email)
@@ -53,7 +53,7 @@ export const userRoutes = (app: Application) => {
   // updates Mdp :id user
   userRouter.put("/password/:id", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager], allowSameUser: true }),
-    userCtrl.patchMdp
+    userCtrl.updatePassword
   ]);
 
   // deletes :id user
