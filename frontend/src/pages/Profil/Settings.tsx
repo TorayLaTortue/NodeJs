@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Box, TextField, Button } from '@mui/material';
 import Background from '@/components/Layout/Background';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { userSelectors } from '@/features/user/userSlice';
 import { fetchUserById, UpdateUserById } from '@/features/user/userServices';
 import { RequestState } from '@/types/appTypes';
-import { TextField, Button } from '@mui/material';
 
 const Settings = () => {
   const dispatch = useAppDispatch();
@@ -28,50 +28,100 @@ const Settings = () => {
   }, [dispatch, id]);
 
   const handleUpdateUser = () => {
-    const updatedUser = { userId: id, displayName, photoURL, email };
-    dispatch(UpdateUserById(updatedUser));
+    dispatch(UpdateUserById({ userId: id, displayName, photoURL, email }));
   };
 
   return (
     <div>
       <Background>
-        <TextField
-          required
-          id="outlined-required"
-          color="info"
-          label="Display Name"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
-        />
-        <TextField
-          required
-          id="outlined-required"
-          color="info"
-          label="Photo URL"
-          value={photoURL}
-          onChange={(e) => setPhotoURL(e.target.value)}
-        />
-        <TextField
-          required
-          id="outlined-required"
-          color="info"
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {error ? (
-          <>Oh no, there was an error</>
-        ) : status === RequestState.pending ? (
-          <>Loading...</>
-        ) : (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleUpdateUser}
-          >
-            Update User
-          </Button>
-        )}
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+          <TextField
+            required
+            id="outlined-required"
+            label="Display Name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'white', // Text color
+              },
+              '& .MuiInputLabel-root': {
+                color: 'lightblue', // Label color
+              },
+              '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'lightblue', // Border color
+              },
+              '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'darkblue', // Border color on hover
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'darkblue', // Border color on focus
+              },
+            }}
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="Photo URL"
+            value={photoURL}
+            onChange={(e) => setPhotoURL(e.target.value)}
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'white', // Text color
+              },
+              '& .MuiInputLabel-root': {
+                color: 'lightblue', // Label color
+              },
+              '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'lightblue', // Border color
+              },
+              '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'darkblue', // Border color on hover
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'darkblue', // Border color on focus
+              },
+            }}
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'white', // Text color
+              },
+              '& .MuiInputLabel-root': {
+                color: 'lightblue', // Label color
+              },
+              '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'lightblue', // Border color
+              },
+              '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'darkblue', // Border color on hover
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'darkblue', // Border color on focus
+              },
+            }}
+          />
+          {error ? (
+            <>Oh no, there was an error</>
+          ) : status === RequestState.pending ? (
+            <>Loading...</>
+          ) : (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleUpdateUser}
+              sx={{ mt: 2 }} // Add margin top to the button
+            >
+              Update User
+            </Button>
+          )}
+        </Box>
       </Background>
     </div>
   );
