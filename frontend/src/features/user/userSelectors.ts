@@ -6,12 +6,14 @@ import { RequestState } from "@/types/appTypes";
 // Select user info from store
 const selectUserState: Selector<UserStateType, UserStateType> = state => state;
 const selectUserInfo: Selector<UserStateType, UserType | null> = state => state.data;
+const selectUserList: Selector<UserStateType, UserType[] | null> = state => state.users;
 const selectUserStatus: Selector<UserStateType, RequestState> = state => state.status;
 const selectUserError: Selector<UserStateType, string> = state => state.error;
 
 export default {
     selectUserState,
     selectUserInfo,
+    selectUserList,
     selectUserStatus,
     selectUserError
 }

@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { nullUserType, UserType } from '@/features/user/userType';
 import reducers from '@/features/user/userReducers';
-import { fetchUserById } from '@/features/user/userServices';
+import { fetchAllUsers, fetchUserById } from '@/features/user/userServices';
 import { RequestState } from "@/types/appTypes";
 import selectors from '@/features/user/userSelectors';
 
@@ -10,6 +10,7 @@ export type UserStateType = {
   status: RequestState;
   error: string;
   data: UserType;
+  users: UserType[];
 }
 
 const loadUserStateFromLocalStorage = () => {
@@ -27,6 +28,7 @@ export const initialState: UserStateType = {
   status: RequestState.idle,
   error: '',
   data: loadUserStateFromLocalStorage() || nullUserType,
+  users: [],
 };
 
 export const userSlice = createSlice({
@@ -36,22 +38,33 @@ export const userSlice = createSlice({
   selectors,
   extraReducers: (builder) => {
     // When our request is pending:
-    // - store the 'pending' state as the status for the corresponding pokemon name
     builder.addCase(fetchUserById.pending, (state) => {
       state.status = RequestState.pending;
     })
     // When our request is fulfilled:
-    // - store the 'fulfilled' state as the status for the corresponding pokemon name
-    // - and store the received payload as the data for the corresponding pokemon name
-    builder.addCase(fetchUserById.fulfilled, (state, action) => {
+    builder.addCase(fetchUserById.fulfilled, (state, action: PayloadAction<UserType>) => {
       state.data = action.payload;
       state.status = RequestState.fulfilled;
     })
     // When our request is rejected:
-    // - store the 'rejected' state as the status for the corresponding pokemon name
     builder.addCase(fetchUserById.rejected, (state, action) => {
       state.status = RequestState.rejected;
-      state.error = action.payload ? action.payload.message : 'Errur inconnu';
+      state.error = action.payload ? action.payload.message : 'Erreur inconnu';
+    })
+
+    // When our request is pending:
+    builder.addCase(fetchAllUsers.pending, (state) => {
+      state.status = RequestState.pending;
+    })
+    // When our request is fulfilled:
+    builder.addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<UserType[]>) => {
+      state.users = action.payload;
+      state.status = RequestState.fulfilled;
+    })
+    // When our request is rejected:
+    builder.addCase(fetchAllUsers.rejected, (state, action) => {
+      state.status = RequestState.rejected;
+      state.error = action.payload ? action.payload.message : 'Erreur inconnue';
     })
   },
 });

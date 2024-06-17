@@ -17,6 +17,7 @@ const resetUser = (state: UserStateType) => {
     state.data = initialState.data;
     state.error = initialState.error;
     state.status = initialState.status;
+    state.users = initialState.users;
 };
 
 export default {

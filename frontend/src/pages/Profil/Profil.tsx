@@ -13,8 +13,14 @@ const Profile = () => {
 
   useEffect(() => {
       dispatch(fetchUserById(id))
+      console.log(data);
   }, [dispatch]);
 
+  const userInfo: string[] = [
+    `Display Name: ${data.displayName}`,
+    `Email: ${data.email}`,
+    `Role: ${data.role}`,
+  ];
 
   return (
     <div>
@@ -25,9 +31,8 @@ const Profile = () => {
           <>Loading...</>
         ) : data ? (
           <UserCard
-            displayName={data.displayName}
+            info={userInfo}
             photoURL={data.photoURL}
-            role={data.role}
           />
         ) : null}
       </Background>

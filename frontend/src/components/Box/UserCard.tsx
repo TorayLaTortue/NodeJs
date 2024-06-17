@@ -1,47 +1,27 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import { RoutesType } from '@/types/routeTypes';
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
 
 type UserCardProps = {
-  displayName: string;
+  info: string[]; 
   photoURL: string;
-  role: string;
 };
 
-const UserCard: React.FC<UserCardProps> = ({ displayName, photoURL, role }) => {
-  const navigate = useNavigate();
-
-  const handleNavigate = (path: RoutesType) => {
-    navigate(path);
-  };
+const UserCard: React.FC<UserCardProps> = ({ info, photoURL }) => {
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, mb: 2 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {bull}User Information
+          User Information
         </Typography>
-        <Typography variant="h5" component="div">
-          {displayName}
-        </Typography>
-        <Typography variant="h5" component="div">
-          Role: {role}
-        </Typography>
+        {info.map((value, index) => (
+          <Typography key={index} variant="h5" component="div">
+            {value}
+          </Typography>
+        ))}
         <Box
           component="img"
           sx={{
@@ -53,18 +33,9 @@ const UserCard: React.FC<UserCardProps> = ({ displayName, photoURL, role }) => {
             display: 'block',
           }}
           src={photoURL}
-          alt={role}
+          alt="User Image"
         />
-        <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
       </CardContent>
-      <CardActions>
-        <Button
-          onClick={() => handleNavigate(RoutesType.ProfilSettings)}
-          sx={{ my: 2, color: 'white', display: 'block' }}
-        >
-          Settings 
-        </Button>
-      </CardActions>
     </Card>
   );
 };

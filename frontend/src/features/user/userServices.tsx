@@ -40,4 +40,19 @@ export const UpdateUserById = createAppAsyncThunk<UserType, {userId: string; dis
   }
 );
 
+export const fetchAllUsers = createAppAsyncThunk<UserType[]>(
+  'user/fetchAllUsers',
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await api.get<{ users: UserType[] }>(`${import.meta.env.VITE_API_URL}/users`);
+      return fulfillWithValue(response.data.users);
+    } catch (error) {
+      return rejectWithValue({
+        message: error instanceof AxiosError
+          ? error.message
+          : 'Erreur inconnue'
+      });
+    }
+  }
+);
 export default {};
