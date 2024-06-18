@@ -38,7 +38,7 @@ const SearchUser = () => {
             onChange={handleInputChange}
             fullWidth
             variant="outlined"
-            sx={{ mb: 2 }} // Add margin bottom to the text field
+            sx={{ mb: 2 }} 
           />
           <Button
             variant="contained"

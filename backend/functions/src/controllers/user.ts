@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import User,{UserInterface} from "../models/User.js";
 import jwt from "jsonwebtoken";
 import * as admin from "firebase-admin";
-import { Roles } from "src/models/User.js";
+import { Roles } from "../models/User.js";
 
 export const signup = async (
   req: Request,
@@ -64,12 +64,13 @@ export const create = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { displayName, password, email, role, photoURL } = req.body;
+    const { displayName, password, email, photoURL } = req.body;
 
     // Check if any required field is missing
-    if (!displayName || !password || !email || !role || !photoURL) {
+    if (!displayName || !password || !email || !photoURL) {
       res.status(400).send({ message: "Missing fields" });
     }
+    const role = Roles.user;
 
     // Create Firebase user
     const { uid } = await admin.auth().createUser({

@@ -22,10 +22,8 @@ export const userRoutes = (app: Application) => {
   app.post("/signup", userCtrl.signup);
   app.post("/login", userCtrl.login);
 
-  userRouter.post("/", [
-    isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),
-    userCtrl.create
-  ]);
+  app.post("/",
+    userCtrl.create);
 
   userRouter.get("/", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),

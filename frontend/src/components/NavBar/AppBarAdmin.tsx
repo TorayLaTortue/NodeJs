@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,21 +15,16 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/app/store';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 import BadgeConnected from '../Badge/StyldeBadge';
-import { Roles } from '@/features/user/userType';
-import { Pages, MenuType } from '@/types/appTypes';
 import { RoutesType } from '@/types/routeTypes';
+import { menuPageAdmin } from './Menu';
 
 function ResponsiveAppBarAdmin() {
   const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
-
   const isAuth = useAppSelector(selectIsAuthentificated);
   const navigate = useNavigate();
 
-  // Menu items states
-  const [pagesMenuItems, setPagesMenuItems] = useState<MenuType[]>([{ label: Pages.Home, path: '/' }]);
-  const [settingsMenuItems, setSettingsMenuItems] = useState<MenuType[]>([]);
+  const { settingsMenuItems, pagesMenuItems } = menuPageAdmin(isAuth, role);
 
-  // Menu state
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -49,32 +44,15 @@ function ResponsiveAppBarAdmin() {
     setAnchorElUser(null);
   };
 
-  const handleNavigate = (page: MenuType) => {
+  const handleNavigate = (path: string) => {
+    navigate(path);
     handleCloseNavMenu();
-    navigate(page.path);
+    handleCloseUserMenu();
   };
 
   const handleLogoClick = () => {
-    navigate(RoutesType.DashboardAdminHub);
+    navigate(RoutesType.Home);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      setSettingsMenuItems([
-        { label: Pages.Logout, path: RoutesType.Logout }
-      ]),
-      setPagesMenuItems([
-          ...(role === Roles.admin) ? [
-            { label: Pages.Home, path: RoutesType.Home },
-            { label: Pages.DashboardSearchUser, path: RoutesType.DashboardAdminUser },
-            { label: Pages.DashboardUserList, path: RoutesType.DashboardAdminUsers }
-          ] : [
-            // empty...
-          ]
-        ]);
-      
-    }
-  }, [isAuth]);
 
   return (
     <AppBar position="static">
@@ -131,7 +109,7 @@ function ResponsiveAppBarAdmin() {
               {pagesMenuItems.map((page) => (
                 <MenuItem 
                   key={page.label} 
-                  onClick={() => handleNavigate(page)}
+                  onClick={() => handleNavigate(page.path)}
                 >
                   <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
@@ -159,10 +137,10 @@ function ResponsiveAppBarAdmin() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pagesMenuItems.map((page, id) => (
+            {pagesMenuItems.map((page) => (
               <Button
-                key={id}
-                onClick={() => handleNavigate(page)}
+                key={page.label}
+                onClick={() => handleNavigate(page.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.label}
@@ -198,7 +176,7 @@ function ResponsiveAppBarAdmin() {
               {settingsMenuItems.map((setting) => (
                 <MenuItem 
                   key={setting.label} 
-                  onClick={() => handleNavigate(setting)}
+                  onClick={() => handleNavigate(setting.path)}
                 >
                   <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>

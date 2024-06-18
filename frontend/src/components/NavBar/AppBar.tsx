@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,24 +12,25 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import BadgeConnected from '../Badge/StyldeBadge';
-import { Roles } from '@/features/user/userType';
-import { Pages, MenuType } from '@/types/appTypes';
 import { RoutesType } from '@/types/routeTypes';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { modeActions } from '@/features/ui/uiSlice';
+import BadgeConnected from '../Badge/StyldeBadge';
+import { menuPage, MenuItemType } from './Menu';
+
 
 function ResponsiveAppBar() {
+  const dispatch = useAppDispatch();
+  const mode = useAppSelector((state) => state.mode.mode);
   const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
 
   const isAuth = useAppSelector(selectIsAuthentificated);
   const navigate = useNavigate();
 
-  // Menu items states
-  const [pagesMenuItems, setPagesMenuItems] = useState<MenuType[]>([{ label: Pages.Home, path: '/' }]);
-  const [settingsMenuItems, setSettingsMenuItems] = useState<MenuType[]>([]);
+  const { settingsMenuItems, pagesMenuItems } = menuPage(isAuth, role);
 
-  // Menu state
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -49,41 +50,15 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const handleNavigate = (page: MenuType) => {
+  const handleNavigate = (path: string) => {
+    navigate(path);
     handleCloseNavMenu();
-    navigate(page.path);
+    handleCloseUserMenu();
   };
 
   const handleLogoClick = () => {
     navigate(RoutesType.Home);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      setSettingsMenuItems([
-        { label: Pages.Profile, path: RoutesType.ProfilUser },
-        { label: Pages.Settings, path: RoutesType.ProfilSettings },
-        { label: Pages.Logout, path: RoutesType.Logout }
-      ]),
-      setPagesMenuItems([
-       // { label: Pages.Home, path: Routes.Login }, Kinda useless
-      ]);
-      setPagesMenuItems([
-          ...(role === Roles.admin) ? [
-            { label: Pages.DashboardHub, path: RoutesType.DashboardAdminHub }
-          ] : [
-            // empty...
-          ]
-        ]);
-    } else {
-      setPagesMenuItems([
-        { label: Pages.Login, path: RoutesType.Login },
-      ]);
-      setSettingsMenuItems([
-        { label: Pages.Login, path: RoutesType.Login }
-      ]);
-    }
-  }, [isAuth]);
 
   return (
     <AppBar position="static">
@@ -137,16 +112,25 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pagesMenuItems.map((page) => (
+              {pagesMenuItems.map((page: MenuItemType) => (
                 <MenuItem 
                   key={page.label} 
-                  onClick={() => handleNavigate(page)}
+                  onClick={() => handleNavigate(page.path)}
                 >
                   <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+
+          <IconButton onClick={() => dispatch(modeActions.changeMode())} sx={{ position: 'absolute', right: 50 }}>
+            <Brightness4Icon
+              sx={{
+                transition: 'transform 0.4s',
+                transform: mode === 'dark' ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              }}
+            />
+          </IconButton>
 
           <Typography
             variant="h5"
@@ -168,10 +152,10 @@ function ResponsiveAppBar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pagesMenuItems.map((page, id) => (
+            {pagesMenuItems.map((page: MenuItemType) => (
               <Button
-                key={id}
-                onClick={() => handleNavigate(page)}
+                key={page.label}
+                onClick={() => handleNavigate(page.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.label}
@@ -204,10 +188,10 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settingsMenuItems.map((setting) => (
+              {settingsMenuItems.map((setting: MenuItemType) => (
                 <MenuItem 
                   key={setting.label} 
-                  onClick={() => handleNavigate(setting)}
+                  onClick={() => handleNavigate(setting.path)}
                 >
                   <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
