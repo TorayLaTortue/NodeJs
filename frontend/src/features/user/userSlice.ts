@@ -10,6 +10,7 @@ export type UserStateType = {
   status: RequestState;
   error: string;
   data: UserType;
+  user: UserType;
   users: UserType[];
 }
 
@@ -28,6 +29,7 @@ export const initialState: UserStateType = {
   status: RequestState.idle,
   error: '',
   data: loadUserStateFromLocalStorage() || nullUserType,
+  user: nullUserType,
   users: [],
 };
 
@@ -43,7 +45,7 @@ export const userSlice = createSlice({
     })
     // When our request is fulfilled:
     builder.addCase(fetchUserById.fulfilled, (state, action: PayloadAction<UserType>) => {
-      state.data = action.payload;
+      state.user = action.payload;
       state.status = RequestState.fulfilled;
     })
     // When our request is rejected:

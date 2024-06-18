@@ -13,8 +13,9 @@ export enum Pages {
     Settings = 'Settings',
     Logout = 'Logout',
     Login = 'Login',
-    DashboardAdmin = 'Dashboard Admin',
-    DashboardUser = 'Dashboard User',
+    DashboardHub = 'Hub Admin',
+    DashboardSearchUser = 'Search User',
+    DashboardUserList = 'User List',
   }
   
 export type MenuType = {

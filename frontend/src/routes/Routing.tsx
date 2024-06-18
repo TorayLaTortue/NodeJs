@@ -2,19 +2,19 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Register from '@/pages/Auth/Register';
 import Login from '@/pages/Auth/Login';
 import Home from '@/pages/Home/Home';
-import Users from '@/pages/Users/Users';
 import { useAppSelector } from '@/app/store';
 import { userSelectors } from '@/features/user/userSlice';
 import Profile from '@/pages/Profil/Profil';
 import { PrivateLayout } from '@/components/Layout/PrivateLayout';
 import { Roles } from '@/features/user/userType';
 import { PublicLayout } from '@/components/Layout/PublicLayout';
-import User from '@/pages/Users/User';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 import Settings from '@/pages/Profil/Settings';
 import HubAdmin from '@/pages/Admin/hubAdmin';
 import { signOutUser } from '@/features/auth/authServices';
 import { RoutesType } from '@/types/routeTypes';
+import UserList from '@/pages/Users/UserList';
+import SearchUser from '@/pages/Users/SearchUser';
 
 const Routing = () => (
   <Routes>
@@ -31,8 +31,8 @@ const Routing = () => (
       <Route path="/dashboard" element={<AdminRoute />}>
         <Route path="/dashboard/admin" element={<RestrictedRoute roles={[Roles.admin]} />}>
           <Route path={RoutesType.DashboardAdminHub} element={<HubAdmin />} />
-          <Route path={RoutesType.DashboardAdminUsers} element={<Users />} />
-          <Route path={RoutesType.DashboardAdminUser} element={<User />} />
+          <Route path={RoutesType.DashboardAdminUsers} element={<UserList />} />
+          <Route path={RoutesType.DashboardAdminUser} element={<SearchUser />} />
           <Route path={RoutesType.DashboardAdminNotFound} element={<div>404 Dashboard/admin Not Found</div>} />
           <Route path={RoutesType.DashboardAdminRedirect} element={<Navigate to={RoutesType.ProfilRedirect} />} />
         </Route>

@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react"
-import ResponsiveAppBar from "../NavBar/AppBar";
+import ResponsiveAppBarAdmin from "../NavBar/AppBarAdmin"
 
 export const PrivateLayout = (props: PropsWithChildren) => {
 
     return (
         <div style={{ background: 'black' }} className="private-layout">
-            <ResponsiveAppBar />
+            <ResponsiveAppBarAdmin />
           {props.children}
         </div>
     )

@@ -33,7 +33,7 @@ const UserCard: React.FC<UserCardProps> = ({ info, photoURL }) => {
             display: 'block',
           }}
           src={photoURL}
-          alt="User Image"
+          alt=""
         />
       </CardContent>
     </Card>

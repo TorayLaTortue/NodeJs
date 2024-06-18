@@ -1,8 +1,8 @@
-import UserList from '@/controllers/UserListControllers';
 import React from 'react';
+import Login from './Login';
 
 const Register = () => {
-  <UserList />
+  <Login />
   return <div>Register</div>;
 };
 

@@ -11,19 +11,13 @@ import { RoutesType } from '@/types/routeTypes';
 import { Button } from '@mui/material';
 import { UserType } from '@/features/user/userType';
 
-const Users = () => {
+const UserList = () => {
   const dispatch = useAppDispatch();
   const { status, users, error } = useAppSelector(userSelectors.selectUserState);
-  const userrs = useAppSelector(userSelectors.selectUserList);
 
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log("Users:", users);
-    console.log(userrs);
-  }, [users]);
 
   const navigate = useNavigate();
   const handleNavigate = (path: RoutesType) => {
@@ -61,4 +55,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default UserList;

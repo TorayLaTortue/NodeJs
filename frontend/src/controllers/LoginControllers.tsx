@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-// import { setUser } from '@/features/user/userSlice';
-import UserList from '@/controllers/UserListControllers';
-// import { useAppDispatch } from '@/app/store';
 import { signInUser } from '@/features/auth/authServices';
-// import { setCredentials } from '@/features/auth/authSlice';
 
 const Authorized = () => {
-  // const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

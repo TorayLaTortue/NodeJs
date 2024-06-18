@@ -19,7 +19,7 @@ import { Roles } from '@/features/user/userType';
 import { Pages, MenuType } from '@/types/appTypes';
 import { RoutesType } from '@/types/routeTypes';
 
-function ResponsiveAppBar() {
+function ResponsiveAppBarAdmin() {
   const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
 
   const isAuth = useAppSelector(selectIsAuthentificated);
@@ -55,33 +55,24 @@ function ResponsiveAppBar() {
   };
 
   const handleLogoClick = () => {
-    navigate(RoutesType.Home);
+    navigate(RoutesType.DashboardAdminHub);
   };
 
   useEffect(() => {
     if (isAuth) {
       setSettingsMenuItems([
-        { label: Pages.Profile, path: RoutesType.ProfilUser },
-        { label: Pages.Settings, path: RoutesType.ProfilSettings },
         { label: Pages.Logout, path: RoutesType.Logout }
       ]),
       setPagesMenuItems([
-       // { label: Pages.Home, path: Routes.Login }, Kinda useless
-      ]);
-      setPagesMenuItems([
           ...(role === Roles.admin) ? [
-            { label: Pages.DashboardHub, path: RoutesType.DashboardAdminHub }
+            { label: Pages.Home, path: RoutesType.Home },
+            { label: Pages.DashboardSearchUser, path: RoutesType.DashboardAdminUser },
+            { label: Pages.DashboardUserList, path: RoutesType.DashboardAdminUsers }
           ] : [
             // empty...
           ]
         ]);
-    } else {
-      setPagesMenuItems([
-        { label: Pages.Login, path: RoutesType.Login },
-      ]);
-      setSettingsMenuItems([
-        { label: Pages.Login, path: RoutesType.Login }
-      ]);
+      
     }
   }, [isAuth]);
 
@@ -220,4 +211,4 @@ function ResponsiveAppBar() {
   );
 }
 
-export default ResponsiveAppBar;
+export default ResponsiveAppBarAdmin;
