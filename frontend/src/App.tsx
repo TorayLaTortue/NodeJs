@@ -18,9 +18,3 @@ const App = () => {
 };
 
 export default App;
-
-/**
- * <RedirectButton route="/login" />
-        <Link to="/Register">Questionnaire</Link>
-        <UserList />
- */
