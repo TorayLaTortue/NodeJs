@@ -20,10 +20,9 @@ export const userRoutes = (app: Application) => {
 
 
   app.post("/signup", userCtrl.signup);
-  app.post("/login", userCtrl.login);
+  //app.post("/login", userCtrl.login);
 
-  app.post("/",
-    userCtrl.create);
+  app.post("/", userCtrl.create);
 
   userRouter.get("/", [
     isAuthorized({ hasRole: [Roles.admin, Roles.manager] }),

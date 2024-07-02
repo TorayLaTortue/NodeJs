@@ -315,8 +315,6 @@ export const remove = async (req: Request, res: Response) => {
   }
 };
 
-
-
 export const handleError = async(res: Response, err: any) => {
   return res.status(500).send({ message: `${err.code} - ${err.message}` });
 }

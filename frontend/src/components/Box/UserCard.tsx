@@ -10,31 +10,33 @@ type UserCardProps = {
 };
 
 const UserCard: React.FC<UserCardProps> = ({ info, photoURL }) => {
-
   return (
     <Card sx={{ minWidth: 275, mb: 2 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          User Information
-        </Typography>
-        {info.map((value, index) => (
-          <Typography key={index} variant="h5" component="div">
-            {value}
-          </Typography>
-        ))}
-        <Box
-          component="img"
-          sx={{
-            width: 100,
-            height: 100,
-            borderRadius: '50%',
-            objectFit: 'cover',
-            margin: '0 auto',
-            display: 'block',
-          }}
-          src={photoURL}
-          alt=""
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box
+            component="img"
+            sx={{
+              width: 75,
+              height: 75,
+              borderRadius: '40%',
+              objectFit: 'cover',
+              marginRight: 2,
+            }}
+            src={photoURL}
+            alt="User"
+          />
+          <Box>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+              User Information
+            </Typography>
+            {info.map((value, index) => (
+              <Typography key={index} variant="body1" component="div" sx={{ fontSize: 16, marginBottom: 1 }}>
+                {value}
+              </Typography>
+            ))}
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

@@ -17,6 +17,7 @@ import { selectIsAuthentificated } from '@/features/auth/authSelectors';
 import BadgeConnected from '../Badge/StyldeBadge';
 import { RoutesType } from '@/types/routeTypes';
 import { menuPageAdmin } from './Menu';
+import Logo from '../Badge/Logo';
 
 function ResponsiveAppBarAdmin() {
   const { role, displayName, photoURL } = useAppSelector((state) => state.user.data);
@@ -58,7 +59,7 @@ function ResponsiveAppBarAdmin() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Avatar src={''} onClick={handleLogoClick} style={{ cursor: 'pointer' }} /> {/* Logo */}
+          <Avatar src={Logo} onClick={handleLogoClick} style={{ cursor: 'pointer' }} /> {/* Logo */}
           <Typography
             variant="h6"
             noWrap

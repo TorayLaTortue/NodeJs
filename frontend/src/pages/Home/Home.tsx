@@ -11,7 +11,7 @@ const Home = () => {
           Vite-MUI-TS Template
         </Typography>
         <Typography textAlign="center" variant="subtitle1">
-          React + TS + Vite + Redux + RTK + MUI + RRD + Prettier
+          Home page
         </Typography>
       </Stack>
 

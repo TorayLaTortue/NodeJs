@@ -19,6 +19,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { modeActions } from '@/features/ui/uiSlice';
 import BadgeConnected from '../Badge/StyldeBadge';
 import { menuPage, MenuItemType } from './Menu';
+import Logo from '../Badge/Logo';
 
 
 function ResponsiveAppBar() {
@@ -64,7 +65,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Avatar src={''} onClick={handleLogoClick} style={{ cursor: 'pointer' }} /> {/* Logo */}
+          <Avatar src={Logo} onClick={handleLogoClick} style={{ cursor: 'pointer' }} /> {/* Logo */}
           <Typography
             variant="h6"
             noWrap

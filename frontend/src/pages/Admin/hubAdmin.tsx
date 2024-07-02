@@ -10,7 +10,6 @@ const HubAdmin = () => {
           Hub Admin page
         </Typography>
         <Typography textAlign="center" variant="subtitle1">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa ratione cupiditate nam, itaque officia, facilis, laborum aperiam voluptates iure cum tempora et qui temporibus quisquam porro possimus quibusdam maiores quasi.
         </Typography>
       </Stack>
 
