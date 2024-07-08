@@ -3,7 +3,7 @@ import ResponsiveAppBar from "../NavBar/AppBar";
 
 export const PublicLayout = (props: PropsWithChildren) => {
   return (
-    <div style={{ background: 'black' }} className="public-layout">
+    <div style={{ background: 'primary.main' }} className="public-layout">
         <ResponsiveAppBar />
         {props.children}
     </div>

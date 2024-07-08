@@ -4,13 +4,13 @@ export enum RequestState {
     pending = 'pending',
     fulfilled = 'fulfilled',
     rejected = 'rejected',
-    idle = 'idle'
+    idle = 'idle',
+    errorMessage = ''
 } 
 
 export enum Pages {
     Home = 'Home',
     Profile = 'Profile',
-    Settings = 'Settings',
     Logout = 'Logout',
     Login = 'Login',
     DashboardHub = 'Hub Admin',

@@ -1,22 +1,21 @@
 import React from 'react';
-import TemplateTester from '@/components/Template/TemplateTester';
-import { Typography, Stack, Container } from '@mui/material';
+import { Typography, Stack, Container, Box } from '@mui/material';
 import Counter from '@/components/Counter/Counter';
 
 const Home = () => {
   return (
-    <Container sx={{ py: 2, position: 'relative' }}>      
+    <Container sx={{ py: 2, position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
       <Stack gap={1} my={2}>
         <Typography textAlign="center" variant="h2">
-          Vite-MUI-TS Template
-        </Typography>
-        <Typography textAlign="center" variant="subtitle1">
           Home page
         </Typography>
+        <Typography textAlign="center" variant="subtitle1">
+          Welcome to Toray website
+        </Typography>
       </Stack>
-
-      <TemplateTester />
-      <Counter />
+      <Box sx={{ position: 'absolute', bottom: 30, width: '100%' }}>
+        <Counter />
+      </Box>
     </Container>
   );
 };

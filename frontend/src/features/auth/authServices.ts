@@ -36,6 +36,7 @@ export const signInUser = async (email: string, password: string): Promise<{ inf
 
 export const signOutUser = async () => {
     await auth.signOut();
+    window.location.reload();
 }
 
 // parse user from firebase to app user

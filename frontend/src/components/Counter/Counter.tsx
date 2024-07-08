@@ -11,7 +11,7 @@ const Counter = () => {
     <Stack
       sx={{
         width: '100%',
-        backgroundColor: 'grey.100',
+        backgroundColor: 'secondary.main',
         boxShadow: 1,
         mt: 2,
         p: 2,
@@ -32,7 +32,7 @@ const Counter = () => {
       <Box
         sx={{
           borderRadius: 1,
-          backgroundColor: 'grey.200',
+          backgroundColor: 'secondary.main',
           boxShadow: 3,
           p: 1,
           height: 47,

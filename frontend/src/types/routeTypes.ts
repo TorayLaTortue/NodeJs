@@ -12,7 +12,6 @@ export enum RoutesType {
     DashboardAdminRedirect = '/dashboard/admin',
     
     ProfilUser = '/profil/user',
-    ProfilSettings = '/profil/settings',
     ProfilNotFound = '/profil/*',
     ProfilRedirect = '/profil/profile',
 

@@ -1,5 +1,5 @@
-// users.tsx
 import React, { useEffect } from 'react';
+import { Box, Typography, Button, Grid, CircularProgress } from '@mui/material';
 import Background from '@/components/Layout/Background';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { userSelectors } from '@/features/user/userSlice';
@@ -8,7 +8,6 @@ import { RequestState } from '@/types/appTypes';
 import UserCard from '@/components/Box/UserCard';
 import { useNavigate } from 'react-router-dom';
 import { RoutesType } from '@/types/routeTypes';
-import { Button } from '@mui/material';
 import { UserType } from '@/features/user/userType';
 
 const UserList = () => {
@@ -25,33 +24,51 @@ const UserList = () => {
   };
 
   return (
-    <div>
-      <Background>
-        {error ? (
-          <>Oh no, there was an error</>
-        ) : status === RequestState.pending ? (
-          <>Loading...</>
-        ) : (
-          users?.map((user: UserType) => (
-            <UserCard
-              key={user.uid}
-              info={[
-                `Display Name: ${user.displayName}`,
-                `Email: ${user.email}`,
-                `Role: ${user.role}`,
-              ]}
-              photoURL={user.photoURL}
-            />
-          ))
-        )}
-      </Background>
-      <Button
-        onClick={() => handleNavigate(RoutesType.DashboardAdminHub)}
-        sx={{ my: 2, color: 'white', display: 'block' }}
+    <Background>
+      <Box
+        sx={{
+          maxWidth: 1200,
+          mx: 'auto',
+          p: 4,
+          border: '2px solid',
+          borderColor: 'grey.200',
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          backgroundColor: 'background.paper',
+        }}
       >
-        Hub
-      </Button>
-    </div>
+        <Typography variant="h2" align="center" color="text.secondary" gutterBottom>
+          User List
+        </Typography>
+
+        {error && (
+          <Typography color="error" align="center" gutterBottom>
+            Oh no, there was an error: {error}
+          </Typography>
+        )}
+
+        {status === RequestState.pending ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Grid container spacing={3}>
+            {users?.map((user: UserType) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={user.uid}>
+                <UserCard
+                  info={[
+                    `Display Name: ${user.displayName}`,
+                    `Email: ${user.email}`,
+                    `Role: ${user.role}`,
+                  ]}
+                  photoURL={user.photoURL || ''}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
+    </Background>
   );
 };
 

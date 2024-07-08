@@ -9,7 +9,6 @@ import { PrivateLayout } from '@/components/Layout/PrivateLayout';
 import { Roles } from '@/features/user/userType';
 import { PublicLayout } from '@/components/Layout/PublicLayout';
 import { selectIsAuthentificated } from '@/features/auth/authSelectors';
-import Settings from '@/pages/Profil/Settings';
 import HubAdmin from '@/pages/Admin/hubAdmin';
 import { signOutUser } from '@/features/auth/authServices';
 import { RoutesType } from '@/types/routeTypes';
@@ -26,7 +25,7 @@ const Routing = () => (
         <Route path={RoutesType.Login} element={<Login />} />
         <Route path={RoutesType.Register} element={<Register />} />
         <Route path={RoutesType.AuthNotFound} element={<div>404 auth Not Found</div>} />
-      </Route>
+    </Route>
 
       <Route path="/dashboard" element={<AdminRoute />}>
         <Route path="/dashboard/admin" element={<RestrictedRoute roles={[Roles.admin]} />}>
@@ -40,7 +39,6 @@ const Routing = () => (
 
       <Route path="/profil" element={<ConnectedRoute />}>
         <Route path={RoutesType.ProfilUser} element={<Profile />} />
-        <Route path={RoutesType.ProfilSettings} element={<Settings />} />
         <Route path={RoutesType.ProfilNotFound} element={<div>404 profil Not Found</div>} />
         <Route path={RoutesType.ProfilRedirect} element={<Navigate to={RoutesType.ProfilUser} />} />
         <Route path={RoutesType.GlobalNotFound} element={<div>404 Global Not Found</div>} />

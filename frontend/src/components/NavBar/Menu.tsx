@@ -16,7 +16,6 @@ export const menuPage = (isAuth: boolean, role: string) => {
         if (isAuth) {
           setSettingsMenuItems([
             { label: Pages.Profile, path: RoutesType.ProfilUser },
-            { label: Pages.Settings, path: RoutesType.ProfilSettings },
             { label: Pages.Logout, path: RoutesType.Logout }
           ]),
           setPagesMenuItems([

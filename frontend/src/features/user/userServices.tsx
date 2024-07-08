@@ -11,17 +11,15 @@ export const fetchUserById = createAppAsyncThunk<UserType, string>(
       return fulfillWithValue(response.data.user);
     } catch (error) {
       return rejectWithValue({
-        message: error instanceof AxiosError
-          ? error.message
-          : 'Erreur inconnue'
+        message: error instanceof AxiosError ? error.message : 'Unknown error occurred',
       });
     }
   }
 );
 
-export const UpdateUserById = createAppAsyncThunk<UserType, {userId: string; displayName: string; photoURL: string; email: string;}>(
+export const UpdateUserById = createAppAsyncThunk<UserType, { userId: string; displayName: string; photoURL: string; email: string; }>(
   'user/UpdateUserById',
-  async ({ userId, displayName, photoURL, email, }, { rejectWithValue, fulfillWithValue }) => {
+  async ({ userId, displayName, photoURL, email }, { rejectWithValue, fulfillWithValue }) => {
     try {
       const response = await api.put<{ user: UserType }>(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
         displayName,
@@ -31,9 +29,7 @@ export const UpdateUserById = createAppAsyncThunk<UserType, {userId: string; dis
       return fulfillWithValue(response.data.user);
     } catch (error) {
       return rejectWithValue({
-        message: error instanceof AxiosError
-          ? error.message
-          : 'Erreur inconnue'
+        message: error instanceof AxiosError ? error.message : 'Unknown error occurred',
       });
     }
   }
@@ -47,30 +43,26 @@ export const fetchAllUsers = createAppAsyncThunk<UserType[]>(
       return fulfillWithValue(response.data.users);
     } catch (error) {
       return rejectWithValue({
-        message: error instanceof AxiosError
-          ? error.message
-          : 'Erreur inconnue'
+        message: error instanceof AxiosError ? error.message : 'Unknown error occurred',
       });
     }
   }
 );
 
-export const postNewUser = createAppAsyncThunk<UserType, {displayName: string; password: string; photoURL: string; email: string;}>(
+export const postNewUser = createAppAsyncThunk<UserType, { displayName: string; password: string; photoURL: string; email: string; }>(
   'user/postUser',
-  async ({ displayName, password, photoURL, email, }, { rejectWithValue, fulfillWithValue }) => {
+  async ({ displayName, password, photoURL, email }, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await api.post<{ user: UserType }>(`${import.meta.env.VITE_API_URL}/`,{
+      const response = await api.post<{ user: UserType }>(`${import.meta.env.VITE_API_URL}/`, {
         displayName,
         password,
-        email,
         photoURL,
+        email,
       });
       return fulfillWithValue(response.data.user);
     } catch (error) {
       return rejectWithValue({
-        message: error instanceof AxiosError
-          ? error.message
-          : 'Erreur inconnue'
+        message: error instanceof AxiosError ? error.message : 'Unknown error occurred',
       });
     }
   }

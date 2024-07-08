@@ -21,7 +21,6 @@ import BadgeConnected from '../Badge/StyldeBadge';
 import { menuPage, MenuItemType } from './Menu';
 import Logo from '../Badge/Logo';
 
-
 function ResponsiveAppBar() {
   const dispatch = useAppDispatch();
   const mode = useAppSelector((state) => state.mode.mode);
@@ -62,7 +61,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: 'secondary.main' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar src={Logo} onClick={handleLogoClick} style={{ cursor: 'pointer' }} /> {/* Logo */}
@@ -77,7 +76,7 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '#fff',
               textDecoration: 'none',
             }}
           >
@@ -118,13 +117,13 @@ function ResponsiveAppBar() {
                   key={page.label} 
                   onClick={() => handleNavigate(page.path)}
                 >
-                  <Typography textAlign="center">{page.label}</Typography>
+                  <Typography textAlign="center" sx={{ color: '#fff' }}>{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          <IconButton onClick={() => dispatch(modeActions.changeMode())} sx={{ position: 'absolute', right: 50 }}>
+          <IconButton onClick={() => dispatch(modeActions.changeMode())} sx={{ position: 'absolute', right: 50, color: '#fff' }}>
             <Brightness4Icon
               sx={{
                 transition: 'transform 0.4s',
@@ -145,7 +144,7 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '#fff',
               textDecoration: 'none',
             }}
           >
@@ -157,7 +156,7 @@ function ResponsiveAppBar() {
               <Button
                 key={page.label}
                 onClick={() => handleNavigate(page.path)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: '#fff', display: 'block' }}
               >
                 {page.label}
               </Button>
@@ -194,7 +193,7 @@ function ResponsiveAppBar() {
                   key={setting.label} 
                   onClick={() => handleNavigate(setting.path)}
                 >
-                  <Typography textAlign="center">{setting.label}</Typography>
+                  <Typography textAlign="center" sx={{ color: '#fff' }}>{setting.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
