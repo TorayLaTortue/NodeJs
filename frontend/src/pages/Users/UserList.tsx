@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { Box, Typography, Button, Grid, CircularProgress } from '@mui/material';
+import { Box, Typography, Grid, CircularProgress } from '@mui/material';
 import Background from '@/components/Layout/Background';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { userSelectors } from '@/features/user/userSlice';
 import { fetchAllUsers } from '@/features/user/userServices';
 import { RequestState } from '@/types/appTypes';
 import UserCard from '@/components/Box/UserCard';
-import { useNavigate } from 'react-router-dom';
-import { RoutesType } from '@/types/routeTypes';
 import { UserType } from '@/features/user/userType';
 
 const UserList = () => {
@@ -17,11 +15,6 @@ const UserList = () => {
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
-
-  const navigate = useNavigate();
-  const handleNavigate = (path: RoutesType) => {
-    navigate(path);
-  };
 
   return (
     <Background>
