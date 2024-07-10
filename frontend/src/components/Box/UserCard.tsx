@@ -12,12 +12,19 @@ type UserCardProps = {
 
 const UserCard: React.FC<UserCardProps> = ({ info, photoURL }) => {
   const userName = info[0];
-  console.log(userName);
+  const firstLetter = userName.charAt(0).toUpperCase();
+
   return (
     <Card sx={{ minWidth: 275, mb: 2 }}>
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={userName} src={photoURL} style={{ marginRight: 16, cursor: 'pointer' }} />
+          <Avatar 
+            alt={userName} 
+            src={photoURL || undefined} 
+            style={{ marginRight: 16, cursor: 'pointer' }}
+          >
+            {photoURL ? null : firstLetter}
+          </Avatar>
           <Box>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               User Information

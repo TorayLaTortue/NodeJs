@@ -50,7 +50,7 @@ const UserList = () => {
               <Grid item xs={12} sm={6} md={4} lg={3} key={user.uid}>
                 <UserCard
                   info={[
-                    `Display Name: ${user.displayName}`,
+                    `${user.displayName}`,
                     `Email: ${user.email}`,
                     `Role: ${user.role}`,
                   ]}
