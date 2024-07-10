@@ -1,5 +1,4 @@
 import { Application } from "express";
-// import auth from "../middleware/auth.js";
 import * as stuffCtrl from "../controllers/stuff.js";
 
 // eslint-disable-next-line new-cap

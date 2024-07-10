@@ -1,10 +1,8 @@
 import { onRequest } from "firebase-functions/v2/https";
-// import * as logger from "firebase-functions/logger";
 import { initializeApp } from "firebase-admin/app";
 import * as mongoose from "mongoose";
 import express from "express";
 import stuffRoutes from "./routes/stuff.js";
-// import userRoutes from "./routes/user.js";
 import * as dotenv from "dotenv";
 import { userRoutes } from "./routes/user.js";
 import cors from "cors";
@@ -37,25 +35,7 @@ mongoose
 
 app.use(express.json());
  
-/* app.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization",
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-  );
-  next();
-}); */
-
-// app.use(express.json());
 stuffRoutes(app);
 userRoutes(app);
-// app.use("/api/auth", userRoutes);
 
-export const api = onRequest(app/* (request: Request, response: Response) => {
-  logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
-} */);
+export const api = onRequest(app);
